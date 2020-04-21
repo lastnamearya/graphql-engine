@@ -16,7 +16,7 @@ import {
 import 'brace/mode/json';
 import Button from '../../../Common/Button/Button';
 import { verifySuccessStatus } from '../utils';
-import { Icon, Spinner } from '../../../UIKit/atoms';
+import { Icon, Spinner, Heading } from '../../../UIKit/atoms';
 import styles from './EventTable.scss';
 
 class RedeliverEvent extends Component {
@@ -161,6 +161,7 @@ class RedeliverEvent extends Component {
                 finalResponse = JSON.stringify(finalResponse, null, 4);
               }
             }
+
             return (
               <div style={{ padding: '20px' }}>
                 <Tabs
@@ -169,20 +170,20 @@ class RedeliverEvent extends Component {
                   id="requestResponseTab"
                 >
                   <Tab eventKey={1} title="Response">
-                    <div className={styles.add_mar_top}>
-                      <div className={styles.subheading_text}>Response</div>
-                      <AceEditor
-                        mode="json"
-                        theme="github"
-                        name="response"
-                        value={finalResponse}
-                        minLines={4}
-                        maxLines={100}
-                        width="100%"
-                        showPrintMargin={false}
-                        showGutter={false}
-                      />
-                    </div>
+                    <Heading type="subHeading" mt="20px">
+                      Response
+                    </Heading>
+                    <AceEditor
+                      mode="json"
+                      theme="github"
+                      name="response"
+                      value={finalResponse}
+                      minLines={4}
+                      maxLines={100}
+                      width="100%"
+                      showPrintMargin={false}
+                      showGutter={false}
+                    />
                   </Tab>
                 </Tabs>
               </div>

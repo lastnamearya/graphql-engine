@@ -6,7 +6,7 @@ import { permissionTypes, getTableNameFromDef } from '../utils';
 import metaDataStyles from '../Settings.scss';
 import { getConfirmation } from '../../../Common/utils/jsUtils';
 import ReloadMetadata from '../MetadataOptions/ReloadMetadata';
-import { Icon } from '../../../UIKit/atoms';
+import { Icon, Heading } from '../../../UIKit/atoms';
 import styles from '../../../Common/TableCommon/Table.scss';
 
 const MetadataStatus = ({ dispatch, metadata }) => {
@@ -101,7 +101,9 @@ const MetadataStatus = ({ dispatch, metadata }) => {
           <div className={metaDataStyles.content_width}>
             <div className={styles.display_flex}>
               <Icon type="check" size={16} color="green.original" mr="xs" />
-              <h4>GraphQL Engine metadata is consistent with database</h4>
+              <Heading as="h4">
+                GraphQL Engine metadata is consistent with database
+              </Heading>
             </div>
           </div>
         </div>
@@ -113,7 +115,9 @@ const MetadataStatus = ({ dispatch, metadata }) => {
         <div className={metaDataStyles.content_width}>
           <div className={styles.display_flex}>
             <Icon type="close" color="red.primary" size={16} mr="xs" />
-            <h4> GraphQL Engine metadata is inconsistent with database </h4>
+            <Heading as="h4">
+              GraphQL Engine metadata is inconsistent with database
+            </Heading>
           </div>
           <div className={styles.add_mar_top}>
             <div className={styles.add_mar_top_small}>
@@ -204,9 +208,9 @@ const MetadataStatus = ({ dispatch, metadata }) => {
       <div
         className={`${styles.clear_fix} ${styles.padd_left} ${styles.padd_top} ${metaDataStyles.metadata_wrapper} container-fluid`}
       >
-        <h2 className={`${styles.heading_text} ${styles.remove_pad_bottom}`}>
+        <Heading as="h2" pb="0px" fontSize="18px">
           Hasura Metadata Status
-        </h2>
+        </Heading>
         {content()}
       </div>
     </div>

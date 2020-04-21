@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Styles.scss';
 import Helmet from 'react-helmet';
+
 import HandlerEditor from '../Common/components/HandlerEditor';
 import KindEditor from '../Common/components/KindEditor';
 import ActionDefinitionEditor from '../Common/components/ActionDefinitionEditor';
@@ -19,6 +19,8 @@ import {
 } from './reducer';
 import { createAction } from '../ServerIO';
 import { getActionDefinitionFromSdl } from '../../../../shared/utils/sdlUtils';
+import { Heading } from '../../../UIKit/atoms';
+import styles from './Styles.scss';
 
 const AddAction = ({
   handler,
@@ -97,7 +99,9 @@ const AddAction = ({
   return (
     <div>
       <Helmet title={'Add Action - Actions | Hasura'} />
-      <div className={styles.heading_text}>Add a new action</div>
+      <Heading as="h2" fontSize="18px" pb="20px">
+        Add a new action
+      </Heading>
       <ActionDefinitionEditor
         value={actionDefinitionSdl}
         error={actionDefinitionError}

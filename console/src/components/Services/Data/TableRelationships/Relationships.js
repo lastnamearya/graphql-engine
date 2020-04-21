@@ -22,6 +22,7 @@ import AddManualRelationship from './AddManualRelationship';
 import suggestedRelationshipsRaw from './autoRelations';
 import RelationshipEditor from './RelationshipEditor';
 import { NotFoundError } from '../../../Error/PageNotFound';
+import { Heading } from '../../../UIKit/atoms';
 
 const addRelationshipCellView = (
   dispatch,
@@ -474,7 +475,7 @@ class Relationships extends Component {
         <br />
         <div className={`${styles.padd_left_remove} container-fluid`}>
           <div className={`${styles.padd_left_remove} col-xs-10 col-md-10`}>
-            <h4 className={styles.subheading_text}>Relationships</h4>
+            <Heading type="subHeading">Relationships</Heading>
             {addedRelationshipsView}
             <br />
             {getAddRelSection()}

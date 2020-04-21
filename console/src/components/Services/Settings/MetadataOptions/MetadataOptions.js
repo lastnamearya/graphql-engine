@@ -1,17 +1,18 @@
 import React from 'react';
+
 import ExportMetadata from './ExportMetadata';
 import ImportMetadata from './ImportMetadata';
 import ReloadMetadata from './ReloadMetadata';
 import ResetMetadata from './ResetMetadata';
+import { Heading } from '../../../UIKit/atoms';
+import styles from '../Settings.scss';
 
 const MetadataOptions = props => {
-  const styles = require('../Settings.scss');
-
   const getMetadataImportExportSection = () => {
     return (
       <div>
         <div className={styles.intro_note}>
-          <h4>Import/Export metadata</h4>
+          <Heading as="h4">Import/Export metadata</Heading>
           <div className={styles.content_width}>
             Get Hasura metadata as JSON.
           </div>
@@ -32,7 +33,7 @@ const MetadataOptions = props => {
     return (
       <div>
         <div key="meta_data_1" className={styles.intro_note}>
-          <h4>Reload metadata</h4>
+          <Heading as="h4">Reload metadata</Heading>
           <div className={styles.content_width}>
             Refresh Hasura metadata, typically required if you have changed the
             underlying postgres or if you have updated your remote schemas.
@@ -44,7 +45,7 @@ const MetadataOptions = props => {
         </div>
 
         <div key="meta_data_3" className={styles.intro_note}>
-          <h4>Reset metadata</h4>
+          <Heading as="h4">Reset metadata</Heading>
           <div className={styles.content_width}>
             Permanently clear GraphQL Engine's metadata and configure it from
             scratch (tracking relevant tables and relationships). This process
@@ -64,9 +65,9 @@ const MetadataOptions = props => {
       className={`${styles.clear_fix} ${styles.padd_left} ${styles.padd_top} ${styles.metadata_wrapper} container-fluid`}
     >
       <div className={styles.subHeader}>
-        <h2 className={`${styles.heading_text} ${styles.remove_pad_bottom}`}>
+        <Heading as="h2" pb="0px" fontSize="18px">
           Hasura Metadata Actions
-        </h2>
+        </Heading>
         <div className="clearfix" />
         <div className={styles.content_width}>
           Hasura metadata stores information about your tables, relationships,

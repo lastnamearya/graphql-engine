@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as tooltip from './Tooltips';
 import { TOGGLE_ENABLE_MANUAL_CONFIG } from './AddActions';
 import KnowMoreLink from '../../../Common/KnowMoreLink/KnowMoreLink';
-import { ToolTip } from '../../../UIKit/atoms';
+import { ToolTip, Heading } from '../../../UIKit/atoms';
 import styles from '../TableCommon/EventTable.scss';
 
 const Operations = ({
@@ -92,10 +92,10 @@ const Operations = ({
   return (
     <div>
       <div className={styles.add_mar_bottom + ' ' + styles.selectOperations}>
-        <h4 className={styles.subheading_text}>
+        <Heading type='subHeading'>
           Trigger Operations
           <ToolTip ml='sm' mr='20px' message={tooltip.operationsDescription} />
-        </h4>
+        </Heading>
         <div className={styles.add_mar_left_small}>{getOperationsList()}</div>
       </div>
     </div>

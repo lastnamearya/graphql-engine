@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Headers from '../../../../Common/Headers/Headers';
-import { ToolTip } from '../../../../UIKit/atoms';
+import { ToolTip, Heading } from '../../../../UIKit/atoms';
 import styles from './Styles.scss';
 
 const editorLabel = 'Headers';
@@ -22,12 +22,10 @@ const HandlerEditor = ({
 
   return (
     <div className={`${className || ''}`}>
-      <h2
-        className={`${styles.subheading_text} ${styles.add_mar_bottom_small}`}
-      >
+      <Heading type="subHeading" mb="xs">
         {editorLabel}
         <ToolTip message={editorTooltip} ml="sm" />
-      </h2>
+      </Heading>
       <div className={`${styles.add_mar_bottom_mid}`}>
         <label
           className={`${styles.add_mar_right} ${styles.cursorPointer}`}

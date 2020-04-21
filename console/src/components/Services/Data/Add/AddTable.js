@@ -53,7 +53,7 @@ import {
   uniqueKeyDescription,
   checkConstraintsDescription,
 } from '../Common/TooltipMessages';
-import { ToolTip } from '../../../UIKit/atoms';
+import { ToolTip, Heading } from '../../../UIKit/atoms';
 import styles from '../../../Common/TableCommon/Table.scss';
 
 /* AddTable is a wrapper which wraps
@@ -431,7 +431,9 @@ class AddTable extends Component {
       >
         <Helmet title="Add Table - Data | Hasura" />
         <div className={styles.subHeader}>
-          <h2 className={styles.heading_text}>Add a new table</h2>
+          <Heading as="h2" fontSize="18px" pb="20px">
+            Add a new table
+          </Heading>
           <div className="clearfix" />
         </div>
         <br />
@@ -462,10 +464,10 @@ class AddTable extends Component {
               />
             </div>
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type="subHeading">
               Primary Key
               <ToolTip message={primaryKeyDescription} ml="sm" />
-            </h4>
+            </Heading>
             <PrimaryKeySelector
               primaryKeys={primaryKeys}
               columns={columns}
@@ -473,10 +475,10 @@ class AddTable extends Component {
               dispatch={dispatch}
             />
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type="subHeading">
               Foreign Keys
               <ToolTip message={foreignKeyDescription} ml="sm" />
-            </h4>
+            </Heading>
             <ForeignKeyWrapper
               allSchemas={allSchemas}
               columns={columns}
@@ -489,10 +491,10 @@ class AddTable extends Component {
               schemaList={schemaList}
             />
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type="subHeading">
               Unique Keys
               <ToolTip message={uniqueKeyDescription} ml="sm" />
-            </h4>
+            </Heading>
             <UniqueKeyWrapper
               allSchemas={allSchemas}
               columns={columns}
@@ -503,10 +505,10 @@ class AddTable extends Component {
               setUniqueKeys={setUniqueKeys}
             />
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type="subHeading">
               Check Constraints
               <ToolTip message={checkConstraintsDescription} ml="sm" />
-            </h4>
+            </Heading>
             <CheckConstraints
               constraints={checkConstraints}
               dispatch={dispatch}

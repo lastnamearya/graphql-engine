@@ -21,7 +21,7 @@ import {
 import { ordinalColSort, convertDateTimeToLocale } from '../utils';
 import '../TableCommon/EventReactTableOverrides.css';
 import { verifySuccessStatus } from '../utils';
-import { Icon } from '../../../UIKit/atoms';
+import { Icon, Heading } from '../../../UIKit/atoms';
 
 const ViewRows = ({
   curTriggerName,
@@ -333,40 +333,36 @@ const ViewRows = ({
                             id="requestResponseTab"
                           >
                             <Tab eventKey={1} title="Request">
-                              <div className={styles.add_mar_top}>
-                                <div className={styles.subheading_text}>
-                                  Request
-                                </div>
-                                <AceEditor
-                                  mode="json"
-                                  theme="github"
-                                  name="payload"
-                                  value={currentPayload}
-                                  minLines={4}
-                                  maxLines={100}
-                                  width="100%"
-                                  showPrintMargin={false}
-                                  showGutter={false}
-                                />
-                              </div>
+                              <Heading type="subHeading" mt="20px">
+                                Request
+                              </Heading>
+                              <AceEditor
+                                mode="json"
+                                theme="github"
+                                name="payload"
+                                value={currentPayload}
+                                minLines={4}
+                                maxLines={100}
+                                width="100%"
+                                showPrintMargin={false}
+                                showGutter={false}
+                              />
                             </Tab>
                             <Tab eventKey={2} title="Response">
-                              <div className={styles.add_mar_top}>
-                                <div className={styles.subheading_text}>
-                                  Response
-                                </div>
-                                <AceEditor
-                                  mode="json"
-                                  theme="github"
-                                  name="response"
-                                  value={finalResponse}
-                                  minLines={4}
-                                  maxLines={100}
-                                  width="100%"
-                                  showPrintMargin={false}
-                                  showGutter={false}
-                                />
-                              </div>
+                              <Heading type="subHeading" mt="20px">
+                                Response
+                              </Heading>
+                              <AceEditor
+                                mode="json"
+                                theme="github"
+                                name="response"
+                                value={finalResponse}
+                                minLines={4}
+                                maxLines={100}
+                                width="100%"
+                                showPrintMargin={false}
+                                showGutter={false}
+                              />
                             </Tab>
                           </Tabs>
                         </div>

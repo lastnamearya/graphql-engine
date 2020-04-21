@@ -1,15 +1,15 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-
 import TextInput from '../../../Common/TextInput/TextInput';
+import { Heading } from '../../../UIKit/atoms';
+import styles from '../../../Common/TableCommon/Table.scss';
 
 const TableNameInput = ({ onChange }) => {
-  const styles = require('../../../Common/TableCommon/Table.scss');
   return [
-    <h4 key="add_table_input_header" className={styles.subheading_text}>
-      Table Name &nbsp; &nbsp;
-    </h4>,
+    <Heading key="add_table_input_header" type="subHeading" mr="sm">
+      Table Name
+    </Heading>,
     <TextInput
       key="add_table_input_element"
       type="text"

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import KnowMoreLink from '../../../../Common/KnowMoreLink/KnowMoreLink';
-import { ToolTip } from '../../../../UIKit/atoms';
+import { ToolTip, Heading } from '../../../../UIKit/atoms';
 import styles from './Styles.scss';
 
 const editorLabel = 'Kind';
@@ -19,9 +19,7 @@ const HandlerEditor = ({ value, onChange, className }) => {
 
   return (
     <div className={className || ''}>
-      <h2
-        className={`${styles.subheading_text} ${styles.add_mar_bottom_small}`}
-      >
+      <Heading type='subHeading' mb='xs'>
         {editorLabel}
         <ToolTip
           message={'Toggle between synchronous vs asynchronous action types'}
@@ -29,7 +27,7 @@ const HandlerEditor = ({ value, onChange, className }) => {
           mr='20px'
         />
         <KnowMoreLink href={docsRef} />
-      </h2>
+      </Heading>
       <div className={styles.display_flex}>
         <label
           className={`${styles.add_mar_right} ${styles.cursorPointer}`}

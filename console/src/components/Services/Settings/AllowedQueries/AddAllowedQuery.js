@@ -5,7 +5,7 @@ import { addAllowedQueries } from '../Actions';
 import ExpandableEditor from '../../../Common/Layout/ExpandableEditor/Editor';
 import { readFile, parseQueryString } from './utils';
 import { showErrorNotification } from '../../Common/Notification';
-import { ToolTip } from '../../../UIKit/atoms';
+import { ToolTip, Heading } from '../../../UIKit/atoms';
 import styles from './AllowedQueries.scss';
 
 class AddAllowedQuery extends React.Component {
@@ -137,9 +137,7 @@ class AddAllowedQuery extends React.Component {
 
     return (
       <div>
-        <h4 className={styles.subheading_text}>
-          Add new queries to allow-list
-        </h4>
+        <Heading type="subHeading">Add new queries to allow-list</Heading>
         <div className={styles.subsection}>
           <div>
             <ExpandableEditor

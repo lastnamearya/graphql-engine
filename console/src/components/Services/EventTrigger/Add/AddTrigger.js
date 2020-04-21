@@ -39,7 +39,7 @@ import {
   getTableName,
   getTrackedTables
 } from '../../../Common/utils/pgUtils';
-import { Icon, ToolTip } from '../../../UIKit/atoms';
+import { Icon, ToolTip, Heading } from '../../../UIKit/atoms';
 import styles from '../TableCommon/EventTable.scss';
 
 class AddTrigger extends Component {
@@ -271,14 +271,14 @@ class AddTrigger extends Component {
 
     const advancedColumnSection = (
       <div>
-        <h4 className={styles.subheading_text}>
+        <Heading type='subHeading'>
           Listen columns for update
           <ToolTip
             message={tooltip.advancedOperationDescription}
             ml='sm'
             mr='20px'
           />
-        </h4>
+        </Heading>
         {selectedOperations.update ? (
           <div className={styles.clear_fix + ' ' + styles.listenColumnWrapper}>
             {getColumnList('update')}
@@ -368,7 +368,9 @@ class AddTrigger extends Component {
       >
         <Helmet title='Create Trigger - Events | Hasura' />
         <div className={styles.subHeader}>
-          <h2 className={styles.heading_text}>Create a new event trigger</h2>
+          <Heading as='h2' fontSize='18px' pb='20px'>
+            Create a new event trigger
+          </Heading>
           <div className='clearfix' />
         </div>
         <br />
@@ -377,10 +379,10 @@ class AddTrigger extends Component {
             <div
               className={`${styles.addCol} col-xs-12 ${styles.padd_left_remove}`}
             >
-              <h4 className={styles.subheading_text}>
+              <Heading type='subHeading'>
                 Trigger Name
                 <ToolTip message={tooltip.triggerNameDescription} ml='sm' />
-              </h4>
+              </Heading>
               <input
                 type='text'
                 data-test='trigger-name'
@@ -393,14 +395,14 @@ class AddTrigger extends Component {
                 }}
               />
               <hr />
-              <h4 className={styles.subheading_text}>
+              <Heading type='subHeading'>
                 Schema/Table
                 <ToolTip
                   ml='sm'
                   mr='20px'
                   message={tooltip.postgresDescription}
                 />
-              </h4>
+              </Heading>
               <select
                 onChange={updateTableList}
                 data-test='select-schema'
@@ -452,10 +454,10 @@ class AddTrigger extends Component {
               </div>
               <hr />
               <div className={styles.add_mar_bottom}>
-                <h4 className={styles.subheading_text}>
+                <Heading type='subHeading'>
                   Webhook URL
                   <ToolTip message={tooltip.webhookUrlDescription} ml='sm' />
-                </h4>
+                </Heading>
                 <div>
                   <div className={styles.dropdown_wrapper}>
                     <DropdownButton
@@ -498,16 +500,14 @@ class AddTrigger extends Component {
               </div>
               <hr />
               <CollapsibleToggle
-                title={
-                  <h4 className={styles.subheading_text}>Advanced Settings</h4>
-                }
+                title={<Heading type='subHeading'>Advanced Settings</Heading>}
                 testId='advanced-settings'
               >
                 <div>
                   {advancedColumnSection}
                   <hr />
                   <div className={styles.add_mar_top}>
-                    <h4 className={styles.subheading_text}>Retry Logic</h4>
+                    <Heading type='subHeading'>Retry Logic</Heading>
                     <div className={styles.retrySection}>
                       <div className={`col-md-3 ${styles.padd_left_remove}`}>
                         <label
@@ -571,7 +571,7 @@ class AddTrigger extends Component {
                   </div>
                   <hr />
                   <div className={styles.add_mar_top}>
-                    <h4 className={styles.subheading_text}>Headers</h4>
+                    <Heading type='subHeading'>Headers</Heading>
                     {headersList}
                   </div>
                 </div>

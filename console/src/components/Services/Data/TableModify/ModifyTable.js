@@ -48,7 +48,7 @@ import {
   uniqueKeyDescription,
   checkConstraintsDescription
 } from '../Common/TooltipMessages';
-import { ToolTip } from '../../../UIKit/atoms';
+import { ToolTip, Heading } from '../../../UIKit/atoms';
 import styles from './ModifyTable.scss';
 
 class ModifyTable extends React.Component {
@@ -162,7 +162,7 @@ class ModifyTable extends React.Component {
 
       return (
         <React.Fragment>
-          <h4 className={styles.subheading_text}>
+          <Heading type='subHeading'>
             Custom GraphQL Root Fields
             <ToolTip
               message={
@@ -170,7 +170,7 @@ class ModifyTable extends React.Component {
               }
               ml='sm'
             />
-          </h4>
+          </Heading>
           <RootFields
             existingRootFields={existingRootFields}
             rootFieldsEdit={rootFieldsEdit}
@@ -187,7 +187,7 @@ class ModifyTable extends React.Component {
 
       return (
         <React.Fragment>
-          <h4 className={styles.subheading_text}>
+          <Heading type='subHeading'>
             Computed fields
             <ToolTip
               message={'Add a function as a virtual field in the GraphQL API'}
@@ -195,7 +195,7 @@ class ModifyTable extends React.Component {
               mr='20px'
             />
             <KnowMoreLink href='https://hasura.io/docs/1.0/graphql/manual/schema/computed-fields.html' />
-          </h4>
+          </Heading>
           <ComputedFieldsEditor
             table={table}
             currentSchema={currentSchema}
@@ -234,7 +234,7 @@ class ModifyTable extends React.Component {
               dispatch={dispatch}
             />
             <EnumTableModifyWarning isEnum={table.is_enum} />
-            <h4 className={styles.subheading_text}>Columns</h4>
+            <Heading type='subHeading'>Columns</Heading>
             <ColumnEditorList
               validTypeCasts={validTypeCasts}
               dataTypeIndexMap={dataTypeIndexMap}
@@ -246,7 +246,7 @@ class ModifyTable extends React.Component {
               customColumnNames={getTableCustomColumnNames(table)}
             />
             <hr />
-            <h4 className={styles.subheading_text}>Add a new column</h4>
+            <Heading type='subHeading'>Add a new column</Heading>
             <ColumnCreator
               dispatch={dispatch}
               tableName={tableName}
@@ -256,10 +256,10 @@ class ModifyTable extends React.Component {
             />
             <hr />
             {getComputedFieldsSection()}
-            <h4 className={styles.subheading_text}>
+            <Heading type='subHeading'>
               Primary Key
               <ToolTip message={primaryKeyDescription} ml='sm' />
-            </h4>
+            </Heading>
             <PrimaryKeyEditor
               tableSchema={table}
               pkModify={pkModify}
@@ -267,10 +267,10 @@ class ModifyTable extends React.Component {
               currentSchema={currentSchema}
             />
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type='subHeading'>
               Foreign Keys
               <ToolTip message={foreignKeyDescription} ml='sm' />
-            </h4>
+            </Heading>
             <ForeignKeyEditor
               tableSchema={table}
               currentSchema={currentSchema}
@@ -280,10 +280,10 @@ class ModifyTable extends React.Component {
               fkModify={fkModify}
             />
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type='subHeading'>
               Unique Keys
               <ToolTip message={uniqueKeyDescription} ml='sm' />
-            </h4>
+            </Heading>
             <UniqueKeyEditor
               tableSchema={table}
               currentSchema={currentSchema}
@@ -293,13 +293,13 @@ class ModifyTable extends React.Component {
               setUniqueKeys={setUniqueKeys}
             />
             <hr />
-            <h4 className={styles.subheading_text}>Triggers</h4>
+            <Heading type='subHeading'>Triggers</Heading>
             <TriggerEditorList tableSchema={table} dispatch={dispatch} />
             <hr />
-            <h4 className={styles.subheading_text}>
+            <Heading type='subHeading'>
               Check Constraints
               <ToolTip message={checkConstraintsDescription} ml='sm' />
-            </h4>
+            </Heading>
             <CheckConstraints
               constraints={getTableCheckConstraints(table)}
               checkConstraintsModify={checkConstraintsModify}
