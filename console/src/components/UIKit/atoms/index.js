@@ -1,6 +1,6 @@
 export * from './Tabs';
 export * from './Spinner';
-export * from './AlertBox';
+export * from './Alert';
 export * from './Icon';
 export * from './Button';
 export * from './Typography';

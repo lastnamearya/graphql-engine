@@ -9,7 +9,7 @@ import {
   shadow,
 } from 'styled-system';
 
-export const StyledAlertBox = styled.div`
+export const StyledAlert = styled.div`
   ${flexbox};
   ${color}
   ${border}

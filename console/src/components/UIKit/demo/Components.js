@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   Button,
-  AlertBox,
+  Alert,
   ToolTip,
   Heading,
   TextLink,
@@ -12,7 +12,7 @@ import {
   SwitchButton,
   Tabs,
   Spinner,
-  Icon
+  Icon,
 } from '../atoms';
 import { Flex } from './styles';
 
@@ -21,24 +21,24 @@ import { Flex } from './styles';
 const dummytabsData = [
   {
     title: 'Title 1',
-    tabContent: 'Content 1'
+    tabContent: 'Content 1',
   },
   {
     title: 'Title 2',
-    tabContent: 'Content 2'
+    tabContent: 'Content 2',
   },
   {
     title: 'Title 3',
-    tabContent: 'Content 3'
+    tabContent: 'Content 3',
   },
   {
     title: 'Title 4',
-    tabContent: 'Content 4'
+    tabContent: 'Content 4',
   },
   {
     title: 'Title 5',
-    tabContent: 'Content 5'
-  }
+    tabContent: 'Content 5',
+  },
 ];
 
 export const UIComponents = () => (
@@ -145,28 +145,28 @@ export const UIComponents = () => (
     </Heading>
     <Spinner size="xl" m="lg" />
 
-    {/* AlertBox  *******************************/}
+    {/* Alert  *******************************/}
 
     <Heading mb="lg" mt="xl" as="h2">
-      Alertbox
+      Alert
     </Heading>
 
-    <Heading as="h3">{'<AlertBox />'}</Heading>
-    <AlertBox m="lg">Dummy Text!!</AlertBox>
+    <Heading as="h3">{'<Alert />'}</Heading>
+    <Alert m="lg">Dummy Text!!</Alert>
 
-    <Heading as="h3">{'<AlertBox type="success" />'}</Heading>
-    <AlertBox type="success" m="lg">
+    <Heading as="h3">{'<Alert type="success" />'}</Heading>
+    <Alert type="success" m="lg">
       Hello Testing!
-    </AlertBox>
+    </Alert>
 
-    <Heading as="h3">{'<AlertBox type="info" />'}</Heading>
-    <AlertBox type="info" m="lg" />
+    <Heading as="h3">{'<Alert type="info" />'}</Heading>
+    <Alert type="info" m="lg" />
 
-    <Heading as="h3">{'<AlertBox type="warning" />'}</Heading>
-    <AlertBox type="warning" m="lg" />
+    <Heading as="h3">{'<Alert type="warning" />'}</Heading>
+    <Alert type="warning" m="lg" />
 
-    <Heading as="h3">{'<AlertBox type="error" />'}</Heading>
-    <AlertBox type="error" m="lg" />
+    <Heading as="h3">{'<Alert type="error" />'}</Heading>
+    <Alert type="error" m="lg" />
 
     {/* Tabs *********************************/}
 

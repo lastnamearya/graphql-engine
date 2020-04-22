@@ -89,7 +89,7 @@ const button = {
 
 // ********************************** //
 
-const alertBox = {
+const alert = {
   success: {
     backgroundColor: colors.green.light,
     borderColor: colors.green.primary,
@@ -332,7 +332,7 @@ export const theme = {
   ],
   borders: [0, '1px solid', '2px solid', '3px solid', '4px solid', '5px solid'],
   button,
-  alertBox,
+  alert,
   icon,
 };
 
