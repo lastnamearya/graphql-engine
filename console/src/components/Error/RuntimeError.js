@@ -62,7 +62,7 @@ const RuntimeError = ({ resetCallback, error }) => (
 
 RuntimeError.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  resetCallback: PropTypes.func.isRequired
+  resetCallback: PropTypes.func.isRequired,
 };
 
 export default connect()(RuntimeError);

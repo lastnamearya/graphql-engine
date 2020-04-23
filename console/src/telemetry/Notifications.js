@@ -2,7 +2,7 @@ import React from 'react';
 import Notifications from 'react-notification-system-redux';
 
 import { setTelemetryNotificationShownInDB } from './Actions';
-import { TextLink } from '../components/UIKit/atoms';
+import { TextLink, Alert } from '../components/UIKit/atoms';
 
 const onRemove = () => {
   return dispatch => {
@@ -15,11 +15,11 @@ const showTelemetryNotification = () => {
     dispatch(
       Notifications.show({
         position: 'tr',
-        autoDismiss: 10,
+        autoDismiss: 10000,
         level: 'info',
-        title: 'Telemetry',
+        // title: 'Telemetry',
         children: (
-          <div>
+          <Alert type="success">
             Help us improve Hasura! The console collects anonymized usage stats
             which allows us to keep improving Hasura at warp speed.
             <TextLink
@@ -31,9 +31,9 @@ const showTelemetryNotification = () => {
               Click here
             </TextLink>
             to read more or to opt-out.
-          </div>
+          </Alert>
         ),
-        onRemove: () => dispatch(onRemove())
+        onRemove: () => dispatch(onRemove()),
       })
     );
   };
