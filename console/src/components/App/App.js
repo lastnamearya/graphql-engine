@@ -9,11 +9,28 @@ import { ThemeProvider } from 'styled-components';
 import ErrorBoundary from '../Error/ErrorBoundary';
 import {
   loadConsoleOpts,
-  telemetryNotificationShown
+  telemetryNotificationShown,
 } from '../../telemetry/Actions';
 import { showTelemetryNotification } from '../../telemetry/Notifications';
 
 import { theme } from '../UIKit/theme';
+// import { nonExecutableDefinitionMessage } from 'graphql/validation/rules/ExecutableDefinitions';
+
+const STYLES = {
+  NotificationItem: {
+    DefaultStyle: {
+      borderTop: 'none',
+      backgroundColor: 'none',
+      boxShadow: 'none',
+    },
+  },
+
+  Dismiss: {
+    DefaultStyle: {
+      display: 'none',
+    },
+  },
+};
 
 class App extends Component {
   componentDidMount() {
@@ -26,6 +43,9 @@ class App extends Component {
     document.getElementById('loading').style.display = 'none';
 
     dispatch(loadConsoleOpts());
+
+    dispatch(telemetryNotificationShown());
+    dispatch(showTelemetryNotification());
   }
 
   componentDidUpdate() {
@@ -51,7 +71,7 @@ class App extends Component {
       notifications,
       connectionFailed,
       dispatch,
-      metadata
+      metadata,
     } = this.props;
 
     if (requestError && error) {
@@ -88,7 +108,7 @@ class App extends Component {
               />
             )}
             <div>{children}</div>
-            <Notifications notifications={notifications} />
+            <Notifications notifications={notifications} style={STYLES} />
           </div>
         </ErrorBoundary>
       </ThemeProvider>
@@ -112,7 +132,7 @@ App.propTypes = {
   children: PropTypes.element,
   dispatch: PropTypes.func.isRequired,
 
-  notifications: PropTypes.array
+  notifications: PropTypes.array,
 };
 
 const mapStateToProps = state => {
@@ -120,7 +140,7 @@ const mapStateToProps = state => {
     ...state.progressBar,
     notifications: state.notifications,
     telemetry: state.telemetry,
-    metadata: state.metadata
+    metadata: state.metadata,
   };
 };
 

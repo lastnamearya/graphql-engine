@@ -17,7 +17,7 @@
 }
 
 .notifications-wrapper .notification > * {
-  width: 400px;
+  width: auto;
 }
 
 .notifications-wrapper .notification .notification-details {
