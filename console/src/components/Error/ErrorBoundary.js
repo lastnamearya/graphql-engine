@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   loadInconsistentObjects,
   redirectToMetadataStatus,
   isMetadataStatusPage,
 } from '../Services/Settings/Actions';
-import Spinner from '../Common/Spinner/Spinner';
-
 import PageNotFound, { NotFoundError } from './PageNotFound';
 import RuntimeError from './RuntimeError';
 import { registerRunTimeError } from '../Main/Actions';
+import { Spinner } from '../UIKit/atoms';
 
 class ErrorBoundary extends React.Component {
   initialState = {
@@ -65,11 +65,7 @@ class ErrorBoundary extends React.Component {
     const { hasError, type, error } = this.state;
 
     if (hasError && metadata.ongoingRequest) {
-      return (
-        <div>
-          <Spinner />
-        </div>
-      );
+      return <Spinner size="xl" my="100px" mx="auto" />;
     }
 
     if (hasError) {

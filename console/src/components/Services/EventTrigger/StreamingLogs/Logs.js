@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import AceEditor from 'react-ace';
-// import matchSorter from 'match-sorter';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+// import matchSorter from 'match-sorter';
 
 import RedeliverEvent from '../TableCommon/RedeliverEvent';
 import TableHeader from '../TableCommon/TableHeader';
@@ -30,7 +30,7 @@ import * as tooltip from '../Common/Tooltips';
 import { convertDateTimeToLocale } from '../utils';
 import Button from '../../../Common/Button/Button';
 import { NotFoundError } from '../../../Error/PageNotFound';
-import { Icon } from '../../../UIKit/atoms';
+import { Icon, Spinner } from '../../../UIKit/atoms';
 
 class StreamingLogs extends Component {
   constructor(props) {
@@ -358,8 +358,8 @@ class StreamingLogs extends Component {
           >
             {this.state.isWatching ? (
               <span>
-                <Icon type="pause" /> Streaming...{' '}
-                <i className={'fa fa-spinner fa-spin'} />
+                <Icon type="pause" /> Streaming...
+                <Spinner ml="sm" size="12px" display="inline-block" />
               </span>
             ) : (
               <span>
@@ -387,7 +387,8 @@ class StreamingLogs extends Component {
               >
                 {log.isLoadingNewer ? (
                   <span>
-                    Loading... <i className={'fa fa-spinner fa-spin'} />
+                    Loading...
+                    <Spinner ml="sm" size="12px" display="inline-block" />
                   </span>
                 ) : (
                   <span>Load newer logs</span>
@@ -419,7 +420,8 @@ class StreamingLogs extends Component {
                 >
                   {log.isLoadingOlder ? (
                     <span>
-                      Loading... <i className={'fa fa-spinner fa-spin'} />
+                      Loading...
+                      <Spinner ml="sm" size="sm" display="inline-block" />
                     </span>
                   ) : (
                     <span>Load older logs</span>

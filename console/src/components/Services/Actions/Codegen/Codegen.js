@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+
 import { getSdlComplete } from '../../../../shared/utils/sdlUtils';
 import {
   getAllCodegenFrameworks,
@@ -8,11 +9,12 @@ import {
   getGlitchProjectURL,
 } from './utils';
 import { getPersistedDerivedAction } from '../lsUtils';
-import Spinner from '../../../Common/Spinner/Spinner';
-import styles from '../Common/components/Styles.scss';
+
 import { Icon } from '../../../UIKit/atoms';
 import CodeTabs from './CodeTabs';
 import DerivedFrom from './DerivedFrom';
+import { Spinner } from '../../../UIKit/atoms';
+import styles from '../Common/components/Styles.scss';
 
 const Codegen = ({ allActions, allTypes, currentAction }) => {
   const [allFrameworks, setAllFrameworks] = React.useState([]);
@@ -49,7 +51,7 @@ const Codegen = ({ allActions, allTypes, currentAction }) => {
   React.useEffect(init, []);
 
   if (loading) {
-    return <Spinner />;
+    return <Spinner size="xl" my="100px" mx="auto" />;
   }
 
   if (error || !allFrameworks.length) {

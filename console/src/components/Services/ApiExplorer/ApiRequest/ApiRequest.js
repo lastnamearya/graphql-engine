@@ -35,7 +35,7 @@ import {
   persistAdminSecretHeaderWasAdded,
   removePersistedAdminSecretHeaderWasAdded,
 } from './utils';
-import { Icon } from '../../../UIKit/atoms';
+import { Icon, Spinner } from '../../../UIKit/atoms';
 
 import styles from '../ApiExplorer.scss';
 import { ADMIN_SECRET_HEADER_KEY } from '../../../../constants';
@@ -442,10 +442,10 @@ class ApiRequest extends Component {
 
               if (isAnalyzingToken && analyzingHeaderRow === i) {
                 analyzeIcon = (
-                  <i
-                    className={
-                      styles.showInspectorLoading + ' fa fa-spinner fa-spin'
-                    }
+                  <Spinner
+                    size="lg"
+                    display="inline-block"
+                    className={styles.showInspectorLoading}
                   />
                 );
               } else {

@@ -19,10 +19,9 @@ import {
   addOrder,
 } from './FilterActions';
 import { ordinalColSort, convertDateTimeToLocale } from '../utils';
-import Spinner from '../../../Common/Spinner/Spinner';
 import '../TableCommon/EventReactTableOverrides.css';
 import { verifySuccessStatus } from '../utils';
-import { Icon } from '../../../UIKit/atoms';
+import { Icon, Spinner } from '../../../UIKit/atoms';
 
 const ViewRows = ({
   curTriggerName,
@@ -209,12 +208,7 @@ const ViewRows = ({
 
   const renderTableBody = () => {
     if (isProgressing) {
-      return (
-        <div>
-          {' '}
-          <Spinner />{' '}
-        </div>
-      );
+      return <Spinner size="xl" my="100px" mx="auto" />;
     } else if (newCurRows.length === 0) {
       return <div> No rows found. </div>;
     }
