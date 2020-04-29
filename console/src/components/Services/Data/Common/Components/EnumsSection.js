@@ -1,8 +1,7 @@
 import React from 'react';
 import Toggle from 'react-toggle';
 
-import { ToolTip, Heading, TextLink } from '../../../../UIKit/atoms';
-import styles from '../../../../Common/Common.scss';
+import { ToolTip, Heading, Link, Flex, Box } from '../../../../UIKit/atoms';
 
 const enumCompatibilityDocsUrl =
   'https://hasura.io/docs/1.0/graphql/manual/schema/enums.html#create-enum-table';
@@ -13,16 +12,16 @@ export const EnumTableModifyWarning = ({ isEnum }) => {
   }
 
   return (
-    <div className={styles.add_mar_bottom}>
+    <Box mb="20px">
       <i>
         * This table is set as an enum. Modifying it may cause your Hasura
         metadata to become inconsistent.
         <br />
-        <TextLink href={enumCompatibilityDocsUrl} type="moreInfo">
+        <Link href={enumCompatibilityDocsUrl} type="moreInfo">
           See enum table requirements
-        </TextLink>
+        </Link>
       </i>
-    </div>
+    </Box>
   );
 };
 
@@ -37,12 +36,12 @@ const EnumsSection = ({ isEnum, toggleEnum, loading }) => {
   //     <div>
   //       <i>
   //         * The table must meet some requirements for you to set it as an enum.{' '}
-  //         <TextLink
+  //         <Link
   //           href={enumCompatibilityDocsUrl}
   //           type="moreInfo"
   //         >
   //           See requirements.
-  //         </TextLink>
+  //         </Link>
   //       </i>
   //     </div>
   //   );
@@ -59,17 +58,13 @@ const EnumsSection = ({ isEnum, toggleEnum, loading }) => {
           ml="sm"
           mr="20px"
         />
-        <TextLink type="moreInfo" href={enumCompatibilityDocsUrl}>
+        <Link type="moreInfo" href={enumCompatibilityDocsUrl}>
           See table requirements
-        </TextLink>
+        </Link>
       </Heading>
-      <div
-        className={`${styles.display_flex} ${styles.add_mar_bottom}`}
-        title={title}
-        data-toggle="tooltip"
-      >
+      <Flex title={title} data-toggle="tooltip" mb="20px">
         <Toggle checked={isEnum} icons={false} onChange={toggleEnum} />
-      </div>
+      </Flex>
     </div>
   );
 };

@@ -7,13 +7,13 @@ import requestAction from '../../../utils/requestAction';
 import { showErrorNotification } from '../Common/Notification';
 import { getRunSqlQuery } from '../../Common/utils/v1QueryUtils';
 import { versionGT } from '../../../helpers/versionUtils';
-import { Spinner, Heading, Text, TextLink } from '../../UIKit/atoms';
+import { Spinner, Heading, Text, Link, Box } from '../../UIKit/atoms';
 import styles from './About.scss';
 
 class About extends Component {
   state = {
     consoleAssetVersion: globals.consoleAssetVersion,
-    pgVersion: null
+    pgVersion: null,
   };
 
   componentDidMount() {
@@ -25,13 +25,13 @@ class About extends Component {
         method: 'POST',
         credentials: globalCookiePolicy,
         headers: dataHeaders,
-        body: JSON.stringify(getRunSqlQuery('SELECT version();', false, true))
+        body: JSON.stringify(getRunSqlQuery('SELECT version();', false, true)),
       };
 
       dispatch(requestAction(url, options)).then(
         data => {
           this.setState({
-            pgVersion: data.result[1][0]
+            pgVersion: data.result[1][0],
           });
         },
         error => {
@@ -54,12 +54,12 @@ class About extends Component {
 
     const getServerVersionSection = () => {
       return (
-        <>
+        <Box mt="20px">
           <Text fontWeight="bold" mr="15px" display="inline-block">
             Current server version:
           </Text>
           {serverVersion || spinner}
-        </>
+        </Box>
       );
     };
 
@@ -71,8 +71,8 @@ class About extends Component {
         versionGT(latestStableServerVersion, serverVersion)
       ) {
         updateLinks = (
-          <>
-            <TextLink
+          <Box mt="20px">
+            <Link
               href={
                 'https://github.com/hasura/graphql-engine/releases/tag/' +
                 latestStableServerVersion
@@ -83,9 +83,9 @@ class About extends Component {
               mx="sm"
             >
               View Changelog
-            </TextLink>
+            </Link>
             <b>&middot;</b>
-            <TextLink
+            <Link
               href="https://hasura.io/docs/1.0/graphql/manual/deployment/updating.html"
               target="_blank"
               fontStyle="italic"
@@ -93,40 +93,40 @@ class About extends Component {
               ml="sm"
             >
               Update Now
-            </TextLink>
-          </>
+            </Link>
+          </Box>
         );
       }
 
       return (
-        <>
+        <Box mt="20px">
           <Text fontWeight="bold" mr="15px" display="inline-block">
             Latest stable server version:
           </Text>
           {latestStableServerVersion || spinner} {updateLinks}
-        </>
+        </Box>
       );
     };
 
     const getConsoleAssetVersionSection = () => {
       return (
-        <>
+        <Box mt="20px">
           <Text fontWeight="bold" mr="sm" display="inline-block">
             Console asset version:
           </Text>
           {consoleAssetVersion || 'NA'}
-        </>
+        </Box>
       );
     };
 
     const getPgVersionSection = () => {
       return (
-        <>
+        <Box mt="20px">
           <Text fontWeight="bold" mr="15px" display="inline-block">
             Postgres version:
           </Text>
           {pgVersion || spinner}
-        </>
+        </Box>
       );
     };
 
@@ -137,18 +137,12 @@ class About extends Component {
           <Heading as="h2" fontSize="h2">
             About
           </Heading>
-          <div className={styles.wd60}>
-            <div className={styles.add_mar_top}>
-              {getServerVersionSection()}
-            </div>
-            <div className={styles.add_mar_top}>
-              {getLatestServerVersionSection()}
-            </div>
-            <div className={styles.add_mar_top}>
-              {getConsoleAssetVersionSection()}
-            </div>
-            <div className={styles.add_mar_top}>{getPgVersionSection()}</div>
-          </div>
+          <Box width="56%">
+            {getServerVersionSection()}
+            {getLatestServerVersionSection()}
+            {getConsoleAssetVersionSection()}
+            {getPgVersionSection()}
+          </Box>
         </div>
       </div>
     );
@@ -159,7 +153,7 @@ const mapStateToProps = state => {
   return {
     dataHeaders: state.tables.dataHeaders,
     serverVersion: state.main.serverVersion,
-    latestStableServerVersion: state.main.latestStableServerVersion
+    latestStableServerVersion: state.main.latestStableServerVersion,
   };
 };
 

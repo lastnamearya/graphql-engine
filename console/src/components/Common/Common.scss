@@ -188,20 +188,6 @@ table tbody tr th {
   cursor: pointer;
 }
 
-.display_flex {
-  display: flex;
-  align-items: center;
-}
-
-.displayFlexContainer {
-  display: flex;
-}
-
-.flex_space_between {
-  display: flex;
-  justify-content: space-between;
-}
-
 .flex_0 {
   flex: 0;
 }
@@ -243,10 +229,6 @@ table tbody tr th {
 
 .wd35 {
   width: 31%;
-}
-
-.wd60 {
-  width: 56%;
 }
 
 .wd82 {
@@ -303,10 +285,6 @@ table tbody tr th {
     font-size: 12px;
     padding-right: 10px;
   }
-}
-
-.apiExplorerFlex {
-  display: flex;
 }
 
 .collectionWrapper {
@@ -538,10 +516,6 @@ input {
   padding-left: 15px;
 }
 
-.add_padd_left_18 {
-  padding-left: 18px;
-}
-
 .add_mar_top_small {
   margin-top: 10px;
 }
@@ -624,10 +598,6 @@ code {
 
 .padd_top_small {
   padding-top: 5px;
-}
-
-.padd_top_medium {
-  padding-top: 10px;
 }
 
 .add_pad_top {
@@ -1302,11 +1272,6 @@ code {
   width: 750px;
 }
 
-.errorBanner {
-  top: 0;
-  z-index: 1000;
-}
-
 .fontStyleNormal {
   font-style: normal;
 }
@@ -1349,13 +1314,13 @@ code {
   cursor: not-allowed;
 }
 
-.hiddenMoreWidth {
-  width: 300px;
-}
-
 .columnListElement {
   float: left;
   margin-right: 50px !important;
+}
+
+.bottom5 {
+  bottom: 5px;
 }
 
 .marginLeftAuto {

@@ -1,12 +1,11 @@
 import React from 'react';
-import styles from './Styles.scss';
 import Helmet from 'react-helmet';
+
 import HandlerEditor from '../Common/components/HandlerEditor';
 import KindEditor from '../Common/components/KindEditor';
 import ActionDefinitionEditor from '../Common/components/ActionDefinitionEditor';
 import HeadersConfEditor from '../Common/components/HeaderConfEditor';
 import TypeDefinitionEditor from '../Common/components/TypeDefinitionEditor';
-import Button from '../../../Common/Button';
 import { getModifyState } from './utils';
 import {
   setModifyState,
@@ -19,6 +18,9 @@ import {
 } from './reducer';
 import { saveAction, deleteAction } from '../ServerIO';
 import { getActionDefinitionFromSdl } from '../../../../shared/utils/sdlUtils';
+import Button from '../../../Common/Button';
+import { Flex } from '../../../UIKit/atoms';
+import styles from './Styles.scss';
 
 const ActionEditor = ({
   currentAction,
@@ -139,7 +141,7 @@ const ActionEditor = ({
         setHeaders={setHeaders}
       />
       <hr />
-      <div className={styles.display_flex}>
+      <Flex>
         <Button
           color="yellow"
           size="sm"
@@ -159,7 +161,7 @@ const ActionEditor = ({
         >
           Delete
         </Button>
-      </div>
+      </Flex>
     </div>
   );
 };

@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
+
 import { showErrorNotification } from '../../Common/Notification';
 import gqlPattern, { gqlColumnErrorNotif } from '../Common/GraphQLValidation';
 import { commonDataTypes } from '../utils';
-
-import SearchableSelectBox from '../../../Common/SearchableSelect/SearchableSelect';
-import CustomInputAutoSuggest from '../../../Common/CustomInputAutoSuggest/CustomInputAutoSuggest';
-
 import {
   getDataOptions,
   getDefaultFunctionsOptions,
   inferDefaultValues,
 } from '../Common/utils';
 
+import SearchableSelectBox from '../../../Common/SearchableSelect/SearchableSelect';
+import CustomInputAutoSuggest from '../../../Common/CustomInputAutoSuggest/CustomInputAutoSuggest';
+
 import Button from '../../../Common/Button/Button';
 import { addColSql } from '../TableModify/ModifyActions';
 
-import styles from './ModifyTable.scss';
 import FrequentlyUsedColumnSelector from '../Common/Components/FrequentlyUsedColumnSelector';
+import { Box, Flex } from '../../../UIKit/atoms';
+import styles from './ModifyTable.scss';
 
 const useColumnEditor = (dispatch, tableName) => {
   const initialState = {
@@ -192,13 +193,15 @@ const ColumnCreator = ({
   const getColumnNullableInput = () => {
     return (
       <span>
-        <input
-          type="checkbox"
-          className={`${styles.input} ${styles.nullable} input-sm form-control`}
-          data-test="nullable-checkbox"
-          {...colNull}
-        />
-        <label className={styles.nullLabel}>Nullable</label>
+        <label className={styles.nullLabel}>
+          <input
+            type="checkbox"
+            className={`${styles.input} ${styles.nullable} input-sm form-control`}
+            data-test="nullable-checkbox"
+            {...colNull}
+          />
+          Nullable
+        </label>
       </span>
     );
   };
@@ -206,13 +209,15 @@ const ColumnCreator = ({
   const getColumnUniqueInput = () => {
     return (
       <span>
-        <input
-          type="checkbox"
-          className={`${styles.input} ${styles.nullable} input-sm form-control`}
-          {...colUnique}
-          data-test="unique-checkbox"
-        />
-        <label className={styles.nullLabel}>Unique</label>
+        <label className={styles.nullLabel}>
+          <input
+            type="checkbox"
+            className={`${styles.input} ${styles.nullable} input-sm form-control`}
+            {...colUnique}
+            data-test="unique-checkbox"
+          />
+          Unique
+        </label>
       </span>
     );
   };
@@ -271,11 +276,8 @@ const ColumnCreator = ({
   };
 
   return (
-    <div className={styles.activeEdit}>
-      <form
-        className={`form-inline ${styles.display_flex}`}
-        onSubmit={onSubmit}
-      >
+    <Box bg="white" p="10px" border={1} borderColor="#ccc" mb="15px">
+      <Flex as="form" className="form-inline" onSubmit={onSubmit}>
         {getColumnNameInput()}
         {getColumnTypeInput()}
         {getColumnNullableInput()}
@@ -283,11 +285,9 @@ const ColumnCreator = ({
         {getColumnDefaultInput()}
 
         {getSubmitButton()}
-      </form>
-      <div className={styles.add_mar_top}>
-        {getFrequentlyUsedColumnSelector()}
-      </div>
-    </div>
+      </Flex>
+      <Box mt="20px">{getFrequentlyUsedColumnSelector()}</Box>
+    </Box>
   );
 };
 

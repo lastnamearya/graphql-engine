@@ -6,7 +6,7 @@ import { commonDataTypes } from '../utils';
 import { getDataOptions, inferDefaultValues } from '../Common/utils';
 
 import TableColumnDefault from './TableColumnDefault';
-import { Icon } from '../../../UIKit/atoms';
+import { Icon, Flex } from '../../../UIKit/atoms';
 
 /* Custom style object for searchable select box */
 const customSelectBoxStyles = {
@@ -90,7 +90,7 @@ const TableColumn = props => {
       : getInferredDefaultValues();
 
   return (
-    <div key={i} className={`${styles.display_flex} form-group`}>
+    <Flex key={i} className="form-group">
       <input
         type="text"
         className={`${styles.input} form-control`}
@@ -138,30 +138,34 @@ const TableColumn = props => {
         data-test={`col-default-${i}`}
       />
       */}{' '}
-      <input
-        className={`${styles.inputCheckbox} form-control `}
-        checked={column.nullable}
-        type="checkbox"
-        onChange={onColNullableChange.bind(undefined, i)}
-        data-test={`nullable-${i}`}
-      />{' '}
-      <label>Nullable</label>
-      <input
-        className={`${styles.inputCheckbox} form-control `}
-        checked={isColumnUnique}
-        type="checkbox"
-        onChange={onColUniqueChange.bind(
-          undefined,
-          i,
-          numUniqueKeys,
-          isColumnUnique,
-          _uindex
-        )}
-        data-test={`unique-${i.toString()}`}
-      />{' '}
-      <label>Unique</label>
+      <label>
+        <input
+          className={styles.inputCheckbox}
+          checked={column.nullable}
+          type="checkbox"
+          onChange={onColNullableChange.bind(undefined, i)}
+          data-test={`nullable-${i}`}
+        />
+        Nullable
+      </label>
+      <label>
+        <input
+          className={styles.inputCheckbox}
+          checked={isColumnUnique}
+          type="checkbox"
+          onChange={onColUniqueChange.bind(
+            undefined,
+            i,
+            numUniqueKeys,
+            isColumnUnique,
+            _uindex
+          )}
+          data-test={`unique-${i.toString()}`}
+        />
+        Unique
+      </label>
       {getRemoveIcon(colLength)}
-    </div>
+    </Flex>
   );
 };
 

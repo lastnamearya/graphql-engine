@@ -21,8 +21,8 @@ import {
 } from '../../Common/stateDefaults';
 import { addActionRel, removeActionRel } from '../../ServerIO';
 import { showErrorNotification } from '../../../Common/Notification';
+import { Icon, Text, Box, Flex } from '../../../../UIKit/atoms';
 import tableStyles from '../../../../Common/TableCommon/TableStyles.scss';
-import { Icon, Text } from '../../../../UIKit/atoms';
 
 const RelationshipEditor = ({
   objectType,
@@ -129,7 +129,7 @@ const RelationshipEditor = ({
       ? 'A relationship cannot be renamed. Please drop and re-create if you really must.'
       : undefined;
     return (
-      <div className={`${styles.add_mar_bottom}`}>
+      <Box mb="20px">
         <Text fontWeight="bold" mb="sm">
           Relationship Name:
         </Text>
@@ -142,14 +142,14 @@ const RelationshipEditor = ({
           title={relNameInputTitle}
           value={name}
         />
-      </div>
+      </Box>
     );
   };
 
   // rel type select
   const getRelTypeSelect = () => {
     return (
-      <div className={`${styles.add_mar_bottom}`}>
+      <Box mb="20px">
         <Text fontWeight="bold" mb="sm">
           Relationship Type:
         </Text>
@@ -171,7 +171,7 @@ const RelationshipEditor = ({
             Array Relationship
           </option>
         </select>
-      </div>
+      </Box>
     );
   };
 
@@ -179,7 +179,7 @@ const RelationshipEditor = ({
   const getRefSchemaSelect = () => {
     const orderedSchemaList = schemaList.map(s => getSchemaName(s)).sort();
     return (
-      <div className={`${styles.add_mar_bottom}`}>
+      <Box mb="20px">
         <Text fontWeight="bold" mb="sm">
           Reference Schema:
         </Text>
@@ -203,14 +203,14 @@ const RelationshipEditor = ({
             </option>
           ))}
         </select>
-      </div>
+      </Box>
     );
   };
 
   // ref table select
   const getRefTableSelect = () => {
     return (
-      <div className={`${styles.add_mar_bottom}`}>
+      <Box mb="20px">
         <Text fontWeight="bold" mb="sm">
           Reference Table:
         </Text>
@@ -234,22 +234,22 @@ const RelationshipEditor = ({
               </option>
             ))}
         </select>
-      </div>
+      </Box>
     );
   };
 
   // field mapping array builder
   const getRelFieldMappings = () => {
     return (
-      <div className={`${styles.add_mar_bottom}`}>
-        <div className={`row ${styles.add_mar_bottom_mid}`}>
+      <Box mb="20px">
+        <Box mb="10px">
           <Text fontWeight="bold" mr="20px" className="col-sm-4">
             From:
           </Text>
           <Text fontWeight="bold" mr="20px" className="col-sm-4">
             To:
           </Text>
-        </div>
+        </Box>
         {fieldMapping.map((fieldMap, i) => {
           const setColumn = e => {
             const selectedCol = e.target.value;
@@ -303,10 +303,7 @@ const RelationshipEditor = ({
             : undefined;
 
           return (
-            <div
-              className={`row ${styles.add_mar_bottom_mid} ${styles.display_flex}`}
-              key={`fk-col-${i}`}
-            >
+            <Flex key={`fk-col-${i}`} mb="10px">
               <div className={`col-sm-4 ${styles.add_mar_right}`}>
                 <select
                   className={`form-control ${styles.select} ${styles.wd100Percent}`}
@@ -355,10 +352,10 @@ const RelationshipEditor = ({
                 </select>
               </div>
               <div>{removeIcon}</div>
-            </div>
+            </Flex>
           );
         })}
-      </div>
+      </Box>
     );
   };
 

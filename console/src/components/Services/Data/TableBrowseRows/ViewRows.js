@@ -54,7 +54,7 @@ import {
   persistPageSizeChange,
 } from './localStorageUtils';
 import Button from '../../../Common/Button/Button';
-import { Icon, Spinner, TextLink } from '../../../UIKit/atoms';
+import { Icon, Spinner, Link, Flex, Text, Box } from '../../../UIKit/atoms';
 import styles from '../../../Common/TableCommon/Table.scss';
 
 const ViewRows = ({
@@ -359,7 +359,7 @@ const ViewRows = ({
           const deleteIcon = <Icon type="delete" size={10} />;
 
           const handleDeleteClick = () => {
-            dispatch(deleteItem(pkClause));
+            dispatch(deleteItem(pkClause, curTableName, currentSchema));
           };
 
           const deleteTitle = 'Delete row';
@@ -568,7 +568,7 @@ const ViewRows = ({
 
           const getRelExpander = (value, color, clickHandler) => {
             return (
-              <TextLink
+              <Link
                 href="#"
                 color={color}
                 hover="underline"
@@ -576,7 +576,7 @@ const ViewRows = ({
                 onClick={clickHandler}
               >
                 {value}
-              </TextLink>
+              </Link>
             );
           };
 
@@ -709,7 +709,7 @@ const ViewRows = ({
       const pkClauses = selectedRows.map(row =>
         getPKClause(row, hasPrimaryKey, tableSchema)
       );
-      dispatch(deleteItems(pkClauses));
+      dispatch(deleteItems(pkClauses, curTableName, currentSchema));
       setSelectedRows([]);
     };
 
@@ -717,8 +717,10 @@ const ViewRows = ({
 
     if (selectedRows.length > 0) {
       selectedRowsSection = (
-        <div className={`${styles.display_flex} ${styles.add_padd_left_18}`}>
-          <b className={styles.padd_small_right}>Selected:</b>
+        <Flex pl="18px">
+          <Text fontWeight="bold" pr="5px">
+            Selected:
+          </Text>
           {selectedRows.length}
           <button
             className={`${styles.add_mar_right_small} btn btn-xs btn-default ${styles.bulkDeleteButton}`}
@@ -727,7 +729,7 @@ const ViewRows = ({
           >
             <Icon type="delete" size={10} />
           </button>
-        </div>
+        </Flex>
       );
     }
 
@@ -749,7 +751,7 @@ const ViewRows = ({
       const isActive = q.name === activePath[curDepth + 1] ? 'active' : null;
       return (
         <li key={i} className={isActive} role="presentation">
-          <TextLink
+          <Link
             href="#"
             color="black.text"
             onClick={e => {
@@ -758,7 +760,7 @@ const ViewRows = ({
             }}
           >
             {[...activePath.slice(0, 1), ...curPath, q.name].join('.')}
-          </TextLink>
+          </Link>
         </li>
       );
     });
@@ -975,7 +977,7 @@ const ViewRows = ({
   return (
     <div className={isVisible ? '' : 'hide '}>
       {getFilterQuery()}
-      <div className={`row ${styles.add_mar_top}`}>
+      <Box mt="20px" className="row">
         {getSelectedRowsSection()}
         <div className="col-xs-12">
           <div className={styles.tableContainer}>{renderTableBody()}</div>
@@ -983,7 +985,7 @@ const ViewRows = ({
           <br />
           <div>{getChildComponent()}</div>
         </div>
-      </div>
+      </Box>
     </div>
   );
 };

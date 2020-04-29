@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { push } from 'react-router-redux';
 
-import Modal from '../../../Common/Modal/Modal';
-import Button from '../../../Common/Button/Button';
-import { Icon, Heading } from '../../../UIKit/atoms';
-
 import { getTablePermissionsRoute } from '../../../Common/utils/routesUtils';
 import { permissionsSymbols } from '../../../Common/Permissions/PermissionSymbols';
 import {
@@ -32,6 +28,9 @@ import {
   getTablePermissionsByRoles,
   getPermissionRowAccessSummary,
 } from './utils';
+import Modal from '../../../Common/Modal/Modal';
+import Button from '../../../Common/Button/Button';
+import { Icon, Heading, Box, Flex } from '../../../UIKit/atoms';
 import styles from './PermissionsSummary.scss';
 
 class PermissionsSummary extends Component {
@@ -176,12 +175,10 @@ class PermissionsSummary extends Component {
           className={styles.clickableCell}
           onClick={onClick}
         >
-          <div
-            className={styles.display_flex + ' ' + styles.flex_space_between}
-          >
+          <Flex justifyContent="space-between">
             <div>{content}</div>
             <div>{actionIcon}</div>
-          </div>
+          </Flex>
         </td>
       );
     };
@@ -201,18 +198,10 @@ class PermissionsSummary extends Component {
           headerContent = content;
         } else {
           headerContent = (
-            <div
-              className={
-                styles.actionCell +
-                ' ' +
-                styles.display_flex +
-                ' ' +
-                styles.flex_space_between
-              }
-            >
+            <Flex justifyContent="space-between" className={styles.actionCell}>
               <div>{content}</div>
               <div>{actionBtn}</div>
-            </div>
+            </Flex>
           );
         }
 
@@ -466,7 +455,7 @@ class PermissionsSummary extends Component {
             };
 
             columnsDisplay = (
-              <div className={styles.add_mar_bottom_small}>
+              <Box mb="5px">
                 <b>Columns</b> -{' '}
                 <i>
                   {getPermissionColumnAccessSummary(actionPermission, {
@@ -474,7 +463,7 @@ class PermissionsSummary extends Component {
                   })}
                 </i>
                 {showDetails && getColumnsDetails()}
-              </div>
+              </Box>
             );
           }
 
@@ -647,10 +636,10 @@ class PermissionsSummary extends Component {
       };
 
       return (
-        <div className={styles.displayFlexContainer}>
+        <Flex alignItems="flex-start">
           <div className={styles.flex_0}>{getTablesColumnTable()}</div>
           <div>{getTableAllRolesAllActionsTable()}</div>
-        </div>
+        </Flex>
       );
     };
 
@@ -937,7 +926,7 @@ class PermissionsSummary extends Component {
         };
 
         return (
-          <div className={styles.display_flex}>
+          <Flex>
             <input
               type="text"
               className={'form-control'}
@@ -954,7 +943,7 @@ class PermissionsSummary extends Component {
             >
               <Icon type="add" />
             </Button>
-          </div>
+          </Flex>
         );
       };
 
@@ -968,73 +957,61 @@ class PermissionsSummary extends Component {
           submitTestId={'copy-roles-button'}
         >
           <div>
-            <div>
-              <b>From:</b>
-              <div className={styles.add_mar_top_small}>
-                <div className="row form-row">
-                  <div className="form-group col-md-4">
-                    <label>Role</label>
-                    <select
-                      className={'form-control ' + styles.add_mar_top_small}
-                      value={copyFromRole}
-                      onChange={onFromRoleChange}
-                    >
-                      {getFromRoleOptions()}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label>Table</label>
-                    <select
-                      className={'form-control ' + styles.add_mar_top_small}
-                      value={copyFromTable}
-                      onChange={onFromTableChange}
-                    >
-                      <option key={'all'} value={'all'}>
-                        All
-                      </option>
-                      {getFromTableOptions()}
-                    </select>
-                  </div>
-                  <div className="form-group col-md-4">
-                    <label>Action</label>
-                    <select
-                      className={'form-control ' + styles.add_mar_top_small}
-                      value={copyFromAction}
-                      onChange={onFromActionChange}
-                    >
-                      <option key={'all'} value={'all'}>
-                        All
-                      </option>
-                      {getFromActionOptions()}
-                    </select>
-                  </div>
-                </div>
+            <b>From:</b>
+            <Box mt="5px" className="row form-row">
+              <div className="form-group col-md-4">
+                <label>Role</label>
+                <select
+                  className={'form-control ' + styles.add_mar_top_small}
+                  value={copyFromRole}
+                  onChange={onFromRoleChange}
+                >
+                  {getFromRoleOptions()}
+                </select>
               </div>
-            </div>
-            <div className={styles.add_mar_top}>
-              <b>To:</b>
-              <div className={styles.add_mar_top_small}>
-                <div className="row form-row">
-                  <div className="form-group col-md-4">
-                    <label>Roles</label>
-                    {getToRolesList()}
-                    <div
-                      className={
-                        styles.add_mar_top +
-                        ' ' +
-                        styles.add_mar_bottom +
-                        ' ' +
-                        styles.add_mar_left
-                      }
-                    >
-                      OR
-                    </div>
-                    {getNewRoleCreator()}
-                  </div>
-                </div>
+              <div className="form-group col-md-4">
+                <label>Table</label>
+                <select
+                  className={'form-control ' + styles.add_mar_top_small}
+                  value={copyFromTable}
+                  onChange={onFromTableChange}
+                >
+                  <option key={'all'} value={'all'}>
+                    All
+                  </option>
+                  {getFromTableOptions()}
+                </select>
               </div>
-            </div>
+              <div className="form-group col-md-4">
+                <label>Action</label>
+                <select
+                  className={'form-control ' + styles.add_mar_top_small}
+                  value={copyFromAction}
+                  onChange={onFromActionChange}
+                >
+                  <option key={'all'} value={'all'}>
+                    All
+                  </option>
+                  {getFromActionOptions()}
+                </select>
+              </div>
+            </Box>
           </div>
+          <Box mt="20px">
+            <b>To:</b>
+            <Box mt="5px">
+              <div className="row form-row">
+                <div className="form-group col-md-4">
+                  <label>Roles</label>
+                  {getToRolesList()}
+                  <Box my="20px" ml="20px">
+                    OR
+                  </Box>
+                  {getNewRoleCreator()}
+                </div>
+              </div>
+            </Box>
+          </Box>
         </Modal>
       );
     };

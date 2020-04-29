@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import Toggle from 'react-toggle';
-import 'react-toggle/style.css';
 
+import Toggle from '../../../Common/Toggle/Toggle';
 import { updateMigrationModeStatus } from '../../../Main/Actions';
 import { getConfirmation } from '../../../Common/utils/jsUtils';
-import { Heading, TextLink } from '../../../UIKit/atoms';
-import '../../../Common/ReactToggle/ReactToggleOverrides.css';
+import { Heading, Link, Box, Text, Flex } from '../../../UIKit/atoms';
 import styles from './Migrations.scss';
 
 const Migrations = ({ dispatch, migrationMode }) => {
@@ -28,13 +26,13 @@ const Migrations = ({ dispatch, migrationMode }) => {
         </li>
         <li>
           Read more about managing migrations with Hasura at the{' '}
-          <TextLink
+          <Link
             href="https://hasura.io/docs/1.0/graphql/manual/migrations/index.html"
             target="_blank"
             hover="underline"
           >
             Hasura migrations guide
-          </TextLink>
+          </Link>
         </li>
       </ul>
     );
@@ -51,34 +49,36 @@ const Migrations = ({ dispatch, migrationMode }) => {
         </Heading>
         <div className="clearfix" />
       </div>
-      <div className={styles.add_mar_top}>
+      <Box mt="20px">
         <div className={`${styles.padd_left_remove} col-xs-8`}>
           {getNotesSection()}
         </div>
         <div className="clearfix" />
-        <div className={styles.migration_mode + ' ' + styles.add_mar_top}>
-          <label>
-            <span> Allow Postgres schema changes via console </span>
+        <Box mt="20px" display="inline-block" ml="10px">
+          <Flex as="label">
+            <Text fontWeight="bold" ml="10px" display="inline-block">
+              Allow Postgres schema changes via console
+            </Text>
             <Toggle
               checked={migrationMode}
               icons={false}
               onChange={handleMigrationModeToggle}
             />
-          </label>
-        </div>
-      </div>
+          </Flex>
+        </Box>
+      </Box>
     </div>
   );
 };
 
 Migrations.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  migrationMode: PropTypes.bool.isRequired
+  migrationMode: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   ...state.rawSQL,
-  migrationMode: state.main.migrationMode
+  migrationMode: state.main.migrationMode,
 });
 
 const migrationsConnector = connect => connect(mapStateToProps)(Migrations);

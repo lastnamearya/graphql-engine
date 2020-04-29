@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import {
   vSetDefaults,
   // vExpandHeading,
@@ -9,71 +10,16 @@ import {
   UPDATE_TRIGGER_FUNCTION,
   vMakeTableRequests,
 } from './ViewActions';
+import { checkIfTable } from '../../../Common/utils/pgUtils';
 import { setTable } from '../DataActions';
 import TableHeader from '../TableCommon/TableHeader';
 import ViewRows from './ViewRows';
+import { Box } from '../../../UIKit/atoms';
+import styles from '../../../Common/Common.scss';
 
 import { NotFoundError } from '../../../Error/PageNotFound';
 import { exists } from '../../../Common/utils/jsUtils';
 import { getPersistedPageSize } from './localStorageUtils';
-
-/*
-const genHeadings = headings => {
-  if (headings.length === 0) {
-    return [];
-  }
-
-  const heading = headings[0];
-  if (typeof heading === 'string') {
-    return [heading, ...genHeadings(headings.slice(1))];
-  }
-  if (typeof heading === 'object') {
-    if (!heading._expanded) {
-      const headingName =
-        heading.type === 'obj_rel' ? heading.lcol : heading.relname;
-      return [
-        { name: headingName, type: heading.type },
-        ...genHeadings(headings.slice(1)),
-      ];
-    }
-    if (heading.type === 'obj_rel') {
-      const subheadings = genHeadings(heading.headings).map(h => {
-        if (typeof h === 'string') {
-          return heading.relname + '.' + h;
-        }
-        return heading.relname + '.' + h.name;
-      });
-      return [...subheadings, ...genHeadings(headings.slice(1))];
-    }
-  }
-
-  throw 'Incomplete pattern match'; // eslint-disable-line no-throw-literal
-};
-
-
-const genRow = (row, headings) => {
-  if (headings.length === 0) {
-    return [];
-  }
-
-  const heading = headings[0];
-  if (typeof heading === 'string') {
-    return [row[heading], ...genRow(row, headings.slice(1))];
-  }
-  if (typeof heading === 'object') {
-    if (!heading._expanded) {
-      const rowVal = heading.type === 'obj_rel' ? row[heading.lcol] : '[...]';
-      return [rowVal, ...genRow(row, headings.slice(1))];
-    }
-    if (heading.type === 'obj_rel') {
-      const subrow = genRow(row[heading.relname], heading.headings);
-      return [...subrow, ...genRow(row, headings.slice(1))];
-    }
-  }
-
-  throw 'Incomplete pattern match'; // eslint-disable-line no-throw-literal
-};
-*/
 
 class ViewTable extends Component {
   constructor(props) {
@@ -180,10 +126,8 @@ class ViewTable extends Component {
       throw new NotFoundError();
     }
 
-    const styles = require('../../../Common/Common.scss');
-
     // Is this a view
-    const isView = tableSchema.table_type !== 'BASE TABLE';
+    const isView = !checkIfTable(tableSchema);
 
     // Are there any expanded columns
     const viewRows = (
@@ -231,11 +175,11 @@ class ViewTable extends Component {
     let comment = null;
     if (tableSchema.comment) {
       comment = (
-        <div className={styles.add_mar_top}>
+        <Box mt="20px">
           <div className={styles.commentText + ' alert alert-warning'}>
             {tableSchema.comment}
           </div>
-        </div>
+        </Box>
       );
     }
 
