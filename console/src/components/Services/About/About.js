@@ -7,13 +7,13 @@ import requestAction from '../../../utils/requestAction';
 import { showErrorNotification } from '../Common/Notification';
 import { getRunSqlQuery } from '../../Common/utils/v1QueryUtils';
 import { versionGT } from '../../../helpers/versionUtils';
-import { Spinner, Heading } from '../../UIKit/atoms';
+import { Spinner, Heading, Text } from '../../UIKit/atoms';
 import styles from './About.scss';
 
 class About extends Component {
   state = {
     consoleAssetVersion: globals.consoleAssetVersion,
-    pgVersion: null,
+    pgVersion: null
   };
 
   componentDidMount() {
@@ -25,13 +25,13 @@ class About extends Component {
         method: 'POST',
         credentials: globalCookiePolicy,
         headers: dataHeaders,
-        body: JSON.stringify(getRunSqlQuery('SELECT version();', false, true)),
+        body: JSON.stringify(getRunSqlQuery('SELECT version();', false, true))
       };
 
       dispatch(requestAction(url, options)).then(
         data => {
           this.setState({
-            pgVersion: data.result[1][0],
+            pgVersion: data.result[1][0]
           });
         },
         error => {
@@ -54,12 +54,12 @@ class About extends Component {
 
     const getServerVersionSection = () => {
       return (
-        <div>
-          <b>Current server version: </b>
-          <span className={styles.add_mar_left_mid}>
-            {serverVersion || spinner}
-          </span>
-        </div>
+        <>
+          <Text fontWeight="bold" mr="15px" display="inline-block">
+            Current server version:
+          </Text>
+          {serverVersion || spinner}
+        </>
       );
     };
 
@@ -101,34 +101,34 @@ class About extends Component {
       }
 
       return (
-        <div>
-          <b>Latest stable server version: </b>
-          <span className={styles.add_mar_left_mid}>
-            {latestStableServerVersion || spinner} {updateLinks}
-          </span>
-        </div>
+        <>
+          <Text fontWeight="bold" mr="15px" display="inline-block">
+            Latest stable server version:
+          </Text>
+          {latestStableServerVersion || spinner} {updateLinks}
+        </>
       );
     };
 
     const getConsoleAssetVersionSection = () => {
       return (
-        <div>
-          <b>Console asset version: </b>
-          <span className={styles.add_mar_left_mid}>
-            {consoleAssetVersion || 'NA'}
-          </span>
-        </div>
+        <>
+          <Text fontWeight="bold" mr="sm" display="inline-block">
+            Console asset version:
+          </Text>
+          {consoleAssetVersion || 'NA'}
+        </>
       );
     };
 
     const getPgVersionSection = () => {
       return (
-        <div>
-          <b>Postgres version: </b>
-          <span className={styles.add_mar_left_mid}>
-            {pgVersion || spinner}
-          </span>
-        </div>
+        <>
+          <Text fontWeight="bold" mr="15px" display="inline-block">
+            Postgres version:
+          </Text>
+          {pgVersion || spinner}
+        </>
       );
     };
 
@@ -161,7 +161,7 @@ const mapStateToProps = state => {
   return {
     dataHeaders: state.tables.dataHeaders,
     serverVersion: state.main.serverVersion,
-    latestStableServerVersion: state.main.latestStableServerVersion,
+    latestStableServerVersion: state.main.latestStableServerVersion
   };
 };
 

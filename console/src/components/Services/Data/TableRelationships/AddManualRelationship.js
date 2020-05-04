@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ordinalColSort } from '../utils';
 import { addRelViewMigrate, resetManualRelationshipForm } from './Actions';
 import ExpandableEditor from '../../../Common/Layout/ExpandableEditor/Editor';
@@ -10,24 +11,24 @@ import {
   getTableColumnNames,
   getTableName,
   getTableSchema,
-  getTrackedTables,
+  getTrackedTables
 } from '../../../Common/utils/pgUtils';
+import { Text } from '../../../UIKit/atoms';
+import styles from '../TableModify/ModifyTable.scss';
 
 const AddManualRelationship = ({
   tableSchema,
   allSchemas,
   schemaList,
   relAdd,
-  dispatch,
+  dispatch
 }) => {
-  const styles = require('../TableModify/ModifyTable.scss');
-
   const columns = tableSchema.columns.sort(ordinalColSort);
 
   // columns in the right order with their indices
   const orderedColumns = columns.map((c, i) => ({
     name: getColumnName(c),
-    index: i,
+    index: i
   }));
 
   relAdd.rSchema = relAdd.rSchema || getTableSchema(tableSchema);
@@ -61,9 +62,11 @@ const AddManualRelationship = ({
     />
   );
 
-  const expandedLabel = () => {
-    return <b>Configure relationship</b>;
-  };
+  const expandedLabel = () => (
+    <Text fontWeight="bold" display="inline-block">
+      Configure relationship
+    </Text>
+  );
 
   return (
     <div key="add_manual_relationship">

@@ -50,30 +50,18 @@ export type TextProps = {
 export const Text: React.FC<TextProps> = props => {
   const { children, type, fontWeight, fontSize } = props;
 
-  const lineHeight = type === 'explain' ? 'body' : 'explain';
+  const lineHeight = type === 'explain' ? 'explain' : 'body';
 
-  let fontWeightValue;
-  let fontSizeValue;
+  const fontWeightValue = type === 'explain' ? 'bold' : '';
 
-  if (fontWeight) {
-    fontWeightValue = fontWeight;
-  } else if (type === 'explain') {
-    fontWeightValue = 'bold';
-  }
-
-  if (fontSize) {
-    fontSizeValue = fontSize;
-  } else {
-    fontSizeValue = type === 'explain' ? 'explain' : 'p';
-  }
+  const fontSizeValue = type === 'explain' ? 'explain' : '';
 
   return (
     <StyledText
       {...props}
       lineHeight={lineHeight}
-      fontSize={fontSizeValue}
-      fontWeight={fontWeightValue}
-      color="black.text"
+      fontSize={fontSize || fontSizeValue}
+      fontWeight={fontWeight || fontWeightValue}
     >
       {children}
     </StyledText>
@@ -81,10 +69,8 @@ export const Text: React.FC<TextProps> = props => {
 };
 
 Text.defaultProps = {
-  mb: 'zero',
-  mt: 'zero',
-  mr: 'zero',
-  ml: 'zero',
+  mb: 0,
+  mt: 0,
 };
 
 type TextLinkProps = {

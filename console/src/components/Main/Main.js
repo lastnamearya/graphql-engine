@@ -36,7 +36,7 @@ import {
 } from '../Common/utils/localStorageUtils';
 import { setPreReleaseNotificationOptOutInDB } from '../../telemetry/Actions';
 
-import { Icon, Spinner, ToolTip } from '../UIKit/atoms/';
+import { Icon, Spinner, ToolTip, Text } from '../UIKit/atoms/';
 import styles from './Main.scss';
 
 class Main extends React.Component {
@@ -251,9 +251,7 @@ class Main extends React.Component {
           <Icon type="settings" />
           <div className={styles.overlappingExclamation}>
             <div className={styles.iconWhiteBackground} />
-            <div>
-              <Icon type="default" />
-            </div>
+            <Icon type="default" />
           </div>
         </div>
       );
@@ -325,12 +323,11 @@ class Main extends React.Component {
             {/* phantom div to prevent overlapping of banner with content. */}
             <div className={styles.updateBannerWrapper}>
               <div className={styles.updateBanner}>
-                <span> Hey there! A new server version </span>
-                <span className={styles.versionUpdateText}>
-                  {' '}
+                <Text> Hey there! A new server version </Text>
+                <Text fontWeight="bold" mx="6px" pb="3px">
                   {updateNotificationVersion}
-                </span>
-                <span> is available </span>
+                </Text>
+                <Text>is available</Text>
                 <span className={styles.middot}> &middot; </span>
                 <a
                   href={
@@ -497,19 +494,19 @@ class Main extends React.Component {
               }
               to={appPrefix + path}
             >
-              <span className={styles.iconCenter} data-test={block}>
-                <Icon
-                  type={icon}
-                  css={
-                    icon === 'schema'
-                      ? css`
-                          transform: rotate(45deg);
-                        `
-                      : ''
-                  }
-                />
-              </span>
-              <p>{title}</p>
+              <Icon
+                type={icon}
+                data-test={block}
+                css={
+                  icon === 'schema'
+                    ? css`
+                        transform: rotate(45deg);
+                      `
+                    : ''
+                }
+                mr="xs"
+              />
+              <Text>{title}</Text>
             </Link>
           </li>
         </ToolTip>

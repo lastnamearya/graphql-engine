@@ -89,7 +89,7 @@ import {
   getDefaultFilterType,
   getUpdateTooltip,
 } from './utils';
-import { Icon, ToolTip, Heading } from '../../../UIKit/atoms';
+import { Icon, ToolTip, Heading, Text } from '../../../UIKit/atoms';
 import styles from '../../../Common/Permissions/PermissionStyles.scss';
 
 class Permissions extends Component {
@@ -517,9 +517,9 @@ class Permissions extends Component {
       const getSelectedRoles = () => {
         return bulkSelectedRoles.map(r => {
           return (
-            <span key={r} className={styles.add_pad_right}>
-              <b>{r}</b>{' '}
-            </span>
+            <Text key={r} fontWeight="bold" pr="15px">
+              {r}
+            </Text>
           );
         });
       };
@@ -1019,10 +1019,10 @@ class Permissions extends Component {
 
           if (externalObjects.length) {
             _externalPermissionsMsg = (
-              <div className={styles.add_mar_top_small}>
+              <Text mt="sm">
                 For <b>{externalObjects.join(', ')}</b>, set permissions for the
                 corresponding tables/views.
-              </div>
+              </Text>
             );
           }
 
@@ -1109,10 +1109,10 @@ class Permissions extends Component {
                 title={noPermissions ? noPermissionsMsg : ''}
               >
                 <div>
-                  <span className={styles.add_mar_right}>
+                  <Text mr="20px" display="inline-block">
                     Allow role <b>{permissionsState.role}</b> {getAccessText()}{' '}
                     <b>columns</b>:
-                  </span>
+                  </Text>
 
                   {getToggleAllBtn()}
                 </div>
@@ -1695,10 +1695,10 @@ class Permissions extends Component {
                   <div className={styles.add_mar_top_small}>
                     {applyToListHtml}
                   </div>
-                  <div className={styles.add_mar_top}>
+                  <Text mt="20px">
                     <b>Note:</b> While applying permissions for other tables,
                     the column permissions and presets will be ignored
-                  </div>
+                  </Text>
                   <Button
                     onClick={applySameBulk}
                     className={styles.add_mar_top}
