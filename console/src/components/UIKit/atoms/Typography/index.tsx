@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyledHeading, StyledText, StyledTextLink } from './Typography';
+import { StyledHeading, StyledText } from './Typography';
 import { Theme } from '../../theme';
 
 export const Heading = props => {
@@ -20,7 +20,6 @@ export const Heading = props => {
       </StyledHeading>
     );
   }
-  // No else block here.
 
   return <StyledHeading {...props}>{children}</StyledHeading>;
 };
@@ -71,29 +70,4 @@ export const Text: React.FC<TextProps> = props => {
 Text.defaultProps = {
   mb: 0,
   mt: 0,
-};
-
-type TextLinkProps = {
-  underline: boolean;
-  color: string;
-};
-
-export const TextLink: React.FC<TextLinkProps> = props => {
-  const { children, underline } = props;
-
-  return (
-    <StyledTextLink
-      {...props}
-      borderBottom={underline ? 2 : 'none'}
-      borderColor={underline ? 'yellow.primary' : 'none'}
-      fontWeight="medium"
-      fontSize="p"
-    >
-      {children}
-    </StyledTextLink>
-  );
-};
-
-TextLink.defaultProps = {
-  color: 'black.text',
 };

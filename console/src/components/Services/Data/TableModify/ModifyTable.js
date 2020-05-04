@@ -40,7 +40,7 @@ import {
   getTableCustomRootFields,
   getTableCustomColumnNames,
 } from '../../../Common/utils/pgUtils';
-import KnowMoreLink from '../../../Common/KnowMoreLink/KnowMoreLink';
+
 import ComputedFieldsEditor from './ComputedFieldsEditor';
 import {
   foreignKeyDescription,
@@ -48,7 +48,7 @@ import {
   uniqueKeyDescription,
   checkConstraintsDescription,
 } from '../Common/TooltipMessages';
-import { ToolTip, Heading } from '../../../UIKit/atoms';
+import { ToolTip, Heading, Link } from '../../../UIKit/atoms';
 import styles from './ModifyTable.scss';
 
 class ModifyTable extends React.Component {
@@ -194,7 +194,10 @@ class ModifyTable extends React.Component {
               ml="sm"
               mr="20px"
             />
-            <KnowMoreLink href="https://hasura.io/docs/1.0/graphql/manual/schema/computed-fields.html" />
+            <Link
+              type="moreInfo"
+              href="https://hasura.io/docs/1.0/graphql/manual/schema/computed-fields.html"
+            />
           </Heading>
           <ComputedFieldsEditor
             table={table}

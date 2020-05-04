@@ -6,7 +6,7 @@ import SDLEditor from '../../../../Common/AceEditor/SDLEditor';
 import Modal from '../../../../Common/Modal/Modal';
 import CloneTypeModal from './CloneTypeModal';
 import { getTypesSdl } from '../../../../../shared/utils/sdlUtils';
-import { Icon, ToolTip, Heading, Text } from '../../../../UIKit/atoms';
+import { Icon, ToolTip, Heading, Text, Link } from '../../../../UIKit/atoms';
 import styles from './Styles.scss';
 
 const editorLabel = 'New types definition';
@@ -73,27 +73,21 @@ const ActionDefinitionEditor = ({
               <Text color="red.primary">{errorMessage}</Text>
             </div>
           )}
-          {/*
-            <a
-              className={`${styles.cloneTypeText} ${styles.cursorPointer} ${styles.add_mar_right}`}
-              onClick={toggleModal}
-            >
-              <Icon type="copy" mr="xs" />
-              Clone an existing type
-            </a>
-            <Modal
-              show={modalOpen}
-              title={'Clone an existing type'}
-              onClose={toggleModal}
-              customClass={styles.modal}
-            >
-              <CloneTypeModal
-                handleClonedTypes={handleClonedTypes}
-                toggleModal={toggleModal}
-              />
-            </Modal>
-            
-          */}
+          {/* <Link ml="auto" mr="20px" onClick={toggleModal} hover="underline">
+            <Icon type="copy" mr="xs" size={12} mb="-1px" />
+            Clone an existing type
+          </Link>
+          <Modal
+            show={modalOpen}
+            title={'Clone an existing type'}
+            onClose={toggleModal}
+            customClass={styles.modal}
+          >
+            <CloneTypeModal
+              handleClonedTypes={handleClonedTypes}
+              toggleModal={toggleModal}
+            />
+          </Modal> */}
         </div>
         <SDLEditor
           name="sdl-editor"

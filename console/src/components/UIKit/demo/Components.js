@@ -5,7 +5,7 @@ import {
   AlertBox,
   ToolTip,
   Heading,
-  TextLink,
+  Link,
   Text,
   RadioButton,
   Checkbox,
@@ -524,16 +524,16 @@ export const UIComponents = () => (
     </Heading>
     <Heading as="h4">Sub section Heading</Heading>
 
-    {/* TextLink */}
+    {/* Link */}
     <Heading as="h2" mb="lg" mt="xl">
-      {'<TextLink />'}
+      {'<Link />'}
     </Heading>
-    <TextLink>Check it out</TextLink>
+    <Link>Check it out</Link>
 
     <Heading as="h2" mb="lg" mt="xl">
-      {'<TextLink underline />'}
+      {'<Link underline />'}
     </Heading>
-    <TextLink underline>Check it out</TextLink>
+    <Link underline>Check it out</Link>
 
     {/* Text */}
     <Heading mb="lg" mt="xl" as="h2">

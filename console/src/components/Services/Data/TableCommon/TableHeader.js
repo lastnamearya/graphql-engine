@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import Helmet from 'react-helmet';
+
 import { changeTableName } from '../TableModify/ModifyActions';
 import { capitalize } from '../../../Common/utils/jsUtils';
 import EditableHeading from '../../../Common/EditableHeading/EditableHeading';
@@ -75,9 +76,9 @@ const TableHeader = ({
   const getTab = (tab, link, title, dataTestId) => {
     return (
       <li role="presentation" className={tabName === tab ? styles.active : ''}>
-        <Link to={link} data-test={dataTestId || 'table-' + tab}>
+        <RouterLink to={link} data-test={dataTestId || 'table-' + tab}>
           {title}
-        </Link>
+        </RouterLink>
       </li>
     );
   };
@@ -142,4 +143,5 @@ const TableHeader = ({
     </div>
   );
 };
+
 export default TableHeader;

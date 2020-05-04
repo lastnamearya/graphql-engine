@@ -32,8 +32,6 @@ import {
 import _push from '../push';
 import { ordinalColSort } from '../utils';
 import FilterQuery from './FilterQuery';
-import Button from '../../../Common/Button/Button';
-import { Icon, Spinner } from '../../../UIKit/atoms';
 
 import { E_SET_EDITITEM } from './EditActions';
 import { I_SET_CLONE } from '../TableInsertItem/InsertActions';
@@ -55,6 +53,9 @@ import {
   getPersistedColumnsOrder,
   persistPageSizeChange,
 } from './localStorageUtils';
+import Button from '../../../Common/Button/Button';
+import { Icon, Spinner, Link } from '../../../UIKit/atoms';
+import styles from '../../../Common/TableCommon/Table.scss';
 
 const ViewRows = ({
   curTableName,
@@ -84,8 +85,6 @@ const ViewRows = ({
   readOnlyMode,
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
-
-  const styles = require('../../../Common/TableCommon/Table.scss');
 
   const NO_PRIMARY_KEY_MSG = 'No primary key to identify row';
 
@@ -567,11 +566,17 @@ const ViewRows = ({
         const getRelCellContent = () => {
           let cellValue = '';
 
-          const getRelExpander = (value, className, clickHandler) => {
+          const getRelExpander = (value, color, clickHandler) => {
             return (
-              <a href="#" className={className} onClick={clickHandler}>
+              <Link
+                href="#"
+                color={color}
+                hover="underline"
+                hover={color === 'blue.link' ? 'underline' : ''}
+                onClick={clickHandler}
+              >
                 {value}
-              </a>
+              </Link>
             );
           };
 
@@ -586,7 +591,7 @@ const ViewRows = ({
 
             cellValue = getRelExpander(
               'Close',
-              styles.expanded,
+              'red.primary',
               handleCloseClick
             );
           } else {
@@ -618,7 +623,7 @@ const ViewRows = ({
                 }
               };
 
-              cellValue = getRelExpander('View', '', handleViewClick);
+              cellValue = getRelExpander('View', 'blue.link', handleViewClick);
             }
           }
 
@@ -744,15 +749,16 @@ const ViewRows = ({
       const isActive = q.name === activePath[curDepth + 1] ? 'active' : null;
       return (
         <li key={i} className={isActive} role="presentation">
-          <a
+          <Link
             href="#"
+            color="black.text"
             onClick={e => {
               e.preventDefault();
               dispatch({ type: V_SET_ACTIVE, path: curPath, relname: q.name });
             }}
           >
             {[...activePath.slice(0, 1), ...curPath, q.name].join('.')}
-          </a>
+          </Link>
         </li>
       );
     });

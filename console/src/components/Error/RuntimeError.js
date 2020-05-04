@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import Helmet from 'react-helmet';
 
 import globals from '../../Globals';
-import { Heading } from '../UIKit/atoms';
+import { Heading, Link } from '../UIKit/atoms';
 import styles from './ErrorPage.scss';
 
 const errorImage = `${globals.assetsPath}/common/img/hasura_icon_green.svg`;
@@ -22,9 +22,9 @@ const RuntimeError = ({ resetCallback, error }) => (
           <br />
           <div>
             Something went wrong. Head back{' '}
-            <Link to="/" onClick={resetCallback}>
+            <RouterLink to="/" onClick={resetCallback}>
               Home
-            </Link>
+            </RouterLink>
             .
           </div>
           <br />
@@ -33,9 +33,18 @@ const RuntimeError = ({ resetCallback, error }) => (
           </div>
           <br />
           <div>
-            You can report this issue on our{' '}
-            <a href="https://github.com/hasura/graphql-engine/issues">GitHub</a>{' '}
-            or chat with us on <a href="http://discord.gg/hasura">Discord</a>
+            You can report this issue on our
+            <Link
+              mx="xs"
+              href="https://github.com/hasura/graphql-engine/issues"
+              hover="underline"
+            >
+              GitHub
+            </Link>
+            or chat with us on
+            <Link href="http://discord.gg/hasura" hover="underline" ml="xs">
+              Discord
+            </Link>
           </div>
         </div>
         <div className="col-xs-4">

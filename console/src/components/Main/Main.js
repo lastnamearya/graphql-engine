@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import { css } from 'styled-components';
 
 import * as tooltips from './Tooltips';
@@ -36,7 +36,7 @@ import {
 } from '../Common/utils/localStorageUtils';
 import { setPreReleaseNotificationOptOutInDB } from '../../telemetry/Actions';
 
-import { Icon, Spinner, ToolTip, Text } from '../UIKit/atoms/';
+import { Icon, Spinner, ToolTip, Text, Link } from '../UIKit/atoms/';
 import styles from './Main.scss';
 
 class Main extends React.Component {
@@ -262,18 +262,30 @@ class Main extends React.Component {
 
       if (!globals.isAdminSecretSet) {
         adminSecretHtml = (
-          <div className={styles.secureSection}>
-            <a
-              href="https://hasura.io/docs/1.0/graphql/manual/deployment/securing-graphql-endpoint.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <ToolTip message={tooltips.secureEndpoint} placement="left">
-                <Icon type="warning" size={11} mr="sm" />
-              </ToolTip>
-              Secure your endpoint
-            </a>
-          </div>
+          <Link
+            href="https://hasura.io/docs/1.0/graphql/manual/deployment/securing-graphql-endpoint.html"
+            target="_blank"
+            color="white"
+            display="block"
+            pr="15px"
+            pt="1px"
+            height="100%"
+            fontWeight="bold"
+            css={css`
+              display: flex;
+              align-items: center;
+
+              &:hover {
+                color: #fff;
+                opacity: 0.8;
+              }
+            `}
+          >
+            <ToolTip message={tooltips.secureEndpoint} placement="left">
+              <Icon type="warning" size={12} mr="sm" />
+            </ToolTip>
+            Secure your endpoint
+          </Link>
         );
       }
 
@@ -303,13 +315,18 @@ class Main extends React.Component {
             <i>
               This is a pre-release version. Not recommended for production use.
               <span className={styles.middot}> &middot; </span>
-              <a href={'#'} onClick={handlePreRelNotifOptOut}>
+              <Link
+                href={'#'}
+                onClick={handlePreRelNotifOptOut}
+                underline
+                color="black.text"
+              >
                 Opt out of pre-release notifications
-              </a>
+              </Link>
               <ToolTip
                 message={'Only be notified about stable releases'}
                 placement="top"
-                ml="xs"
+                ml="sm"
               />
             </i>
           </React.Fragment>
@@ -329,25 +346,26 @@ class Main extends React.Component {
                 </Text>
                 <Text>is available</Text>
                 <span className={styles.middot}> &middot; </span>
-                <a
+                <Link
                   href={
                     'https://github.com/hasura/graphql-engine/releases/tag/' +
                     updateNotificationVersion
                   }
                   target="_blank"
-                  rel="noopener noreferrer"
+                  underline
+                  color="black.text"
                 >
                   <span>View Changelog</span>
-                </a>
+                </Link>
                 <span className={styles.middot}> &middot; </span>
-                <a
-                  className={styles.updateLink}
+                <Link
                   href="https://hasura.io/docs/1.0/graphql/manual/deployment/updating.html"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  underline
+                  color="black.text"
                 >
                   <span>Update Now</span>
-                </a>
+                </Link>
                 {!isStableRelease && getPreReleaseNote()}
                 <span
                   className={styles.updateBannerClose}
@@ -405,10 +423,10 @@ class Main extends React.Component {
                   To make our <Icon type="love" size={10} mx="xs" /> go wooooo!
                 </li>
                 <li className={'dropdown-item'}>
-                  <a
+                  <Link
                     href="https://github.com/hasura/graphql-engine"
                     target="_blank"
-                    rel="noopener noreferrer"
+                    color="black.text"
                   >
                     <div className={styles.socialIcon}>
                       <img
@@ -421,7 +439,7 @@ class Main extends React.Component {
                       <Icon type="star" size={12} mr="5px" />
                       Star
                     </div>
-                  </a>
+                  </Link>
                   {/*
                           <div className={styles.gitHubBtn}>
                             <iframe
@@ -436,10 +454,10 @@ class Main extends React.Component {
                           */}
                 </li>
                 <li className={'dropdown-item '}>
-                  <a
+                  <Link
                     href="https://twitter.com/intent/tweet?hashtags=graphql,postgres&text=Just%20deployed%20a%20GraphQL%20backend%20with%20@HasuraHQ!%20%E2%9D%A4%EF%B8%8F%20%F0%9F%9A%80%0Ahttps://github.com/hasura/graphql-engine%0A"
                     target="_blank"
-                    rel="noopener noreferrer"
+                    color="black.text"
                   >
                     <div className={styles.socialIcon}>
                       <img
@@ -452,7 +470,7 @@ class Main extends React.Component {
                       <Icon type="twitter" size={12} mr="5px" />
                       Tweet
                     </div>
-                  </a>
+                  </Link>
                 </li>
               </div>
             </div>
@@ -485,7 +503,7 @@ class Main extends React.Component {
       return (
         <ToolTip message={tooltipText} height="100%">
           <li>
-            <Link
+            <RouterLink
               className={
                 currentActiveBlock === block ||
                 (isDefault && currentActiveBlock === '')
@@ -507,7 +525,7 @@ class Main extends React.Component {
                 mr="xs"
               />
               <Text>{title}</Text>
-            </Link>
+            </RouterLink>
           </li>
         </ToolTip>
       );
@@ -597,12 +615,12 @@ class Main extends React.Component {
               </div>
             </div>
             <div className={styles.popUpFooter}>
-              <a
+              <Link
                 href={
                   'https://hasura.io/getintouch?type=hasuraprodemo&utm_source=console'
                 }
                 target={'_blank'}
-                rel="noopener noreferrer"
+                color="red.primary"
               >
                 Set up a chat to learn more{' '}
                 <img
@@ -610,11 +628,12 @@ class Main extends React.Component {
                   src={arrowForwardRed}
                   alt={'Arrow'}
                 />
-              </a>
+              </Link>
             </div>
           </div>
         );
       }
+
       return null;
     };
 
@@ -624,13 +643,13 @@ class Main extends React.Component {
           <div className={styles.header_logo_wrapper}>
             <div className={styles.logoParent}>
               <div className={styles.logo}>
-                <Link to="/">
+                <RouterLink to="/">
                   <img className="img img-responsive" src={logo} />
-                </Link>
+                </RouterLink>
               </div>
-              <Link to="/">
+              <RouterLink to="/">
                 <div className={styles.project_version}>{serverVersion}</div>
-              </Link>
+              </RouterLink>
             </div>
           </div>
           <div className={styles.navigation_wrapper}>
@@ -680,12 +699,12 @@ class Main extends React.Component {
                 </span>
                 {renderProPopup()}
               </div>
-              <Link to="/settings">
+              <RouterLink to="/settings">
                 <div className={styles.helpSection + ' ' + styles.settingsIcon}>
                   {getMetadataStatusIcon()}
                   {getSettingsSelectedMarker()}
                 </div>
-              </Link>
+              </RouterLink>
               <div className={styles.supportSection}>
                 <div
                   id="help"
@@ -713,10 +732,9 @@ class Main extends React.Component {
                 >
                   <div className={styles.help_dropdown_menu_container}>
                     <li className={'dropdown-item'}>
-                      <a
+                      <Link
                         href="https://github.com/hasura/graphql-engine/issues"
                         target="_blank"
-                        rel="noopener noreferrer"
                       >
                         <img
                           className={'img-responsive'}
@@ -724,13 +742,12 @@ class Main extends React.Component {
                           alt={'github'}
                         />
                         <span>Report bugs & suggest improvements</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className={'dropdown-item'}>
-                      <a
+                      <Link
                         href="https://discordapp.com/invite/vBPpJkS"
                         target="_blank"
-                        rel="noopener noreferrer"
                       >
                         <img
                           className={'img-responsive'}
@@ -738,41 +755,37 @@ class Main extends React.Component {
                           alt={'discord'}
                         />
                         <span>Join discord community forum</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className={'dropdown-item'}>
-                      <a href="mailto:support@hasura.io">
+                      <Link href="mailto:support@hasura.io">
                         <img
                           className={'img-responsive'}
                           src={mail}
                           alt={'mail'}
                         />
                         <span>Reach out ({'support@hasura.io'})</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className={'dropdown-item'}>
-                      <a
-                        href="https://hasura.io/docs/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <Link href="https://hasura.io/docs/" target="_blank">
                         <img
                           className={'img-responsive'}
                           src={docs}
                           alt={'docs'}
                         />
                         <span>Head to docs</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className={'dropdown-item'}>
-                      <Link to="/about">
+                      <RouterLink to="/about">
                         <img
                           className={'img-responsive'}
                           src={about}
                           alt={'about'}
                         />
                         <span>About</span>
-                      </Link>
+                      </RouterLink>
                     </li>
                   </div>
                 </ul>

@@ -18,6 +18,7 @@ export const StyledHeading = styled.h1<
     ${color}
     ${space}
     ${layout}
+    ${border}
 `;
 
 export const StyledText = styled.p<
@@ -28,19 +29,4 @@ export const StyledText = styled.p<
     ${space}
     ${border}
     ${layout}
-`;
-
-export const StyledTextLink = styled.a<
-  TypographyProps & ColorProps & SpaceProps & BorderProps
->`
-  &&& {
-    text-decoration: none;
-  }
-
-  cursor: pointer;
-
-  ${typography}
-  ${color}
-  ${space}
-  ${border}
 `;

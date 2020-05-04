@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link as RouterLink } from 'react-router';
 import Helmet from 'react-helmet';
 
 import globals from '../../Globals';
@@ -24,9 +24,9 @@ const PageNotFound = ({ resetCallback }) => (
           <br />
           <div>
             This page doesn't exist. Head back{' '}
-            <Link to="/" onClick={resetCallback}>
+            <RouterLink to="/" onClick={resetCallback}>
               Home
-            </Link>
+            </RouterLink>
             .
           </div>
         </div>

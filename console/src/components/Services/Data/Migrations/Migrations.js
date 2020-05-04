@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import Toggle from '../../../Common/Toggle/Toggle';
 import { updateMigrationModeStatus } from '../../../Main/Actions';
 import { getConfirmation } from '../../../Common/utils/jsUtils';
-import { Heading } from '../../../UIKit/atoms';
+import { Heading, Link } from '../../../UIKit/atoms';
 import styles from './Migrations.scss';
 
 const Migrations = ({ dispatch, migrationMode }) => {
@@ -26,13 +26,13 @@ const Migrations = ({ dispatch, migrationMode }) => {
         </li>
         <li>
           Read more about managing migrations with Hasura at the{' '}
-          <a
+          <Link
             href="https://hasura.io/docs/1.0/graphql/manual/migrations/index.html"
             target="_blank"
-            rel="noopener noreferrer"
+            hover="underline"
           >
             Hasura migrations guide
-          </a>
+          </Link>
         </li>
       </ul>
     );

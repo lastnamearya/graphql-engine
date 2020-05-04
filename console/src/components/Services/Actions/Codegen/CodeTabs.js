@@ -5,8 +5,7 @@ import JSEditor from '../../../Common/AceEditor/JavaScriptEditor';
 import TSEditor from '../../../Common/AceEditor/TypescriptEditor';
 import { getFrameworkCodegen } from './utils';
 import { getFileExtensionFromFilename } from '../../../Common/utils/jsUtils';
-import { Spinner } from '../../../UIKit/atoms';
-import styles from '../Actions.scss';
+import { Spinner, Link } from '../../../UIKit/atoms';
 
 const CodeTabs = ({
   framework,
@@ -48,9 +47,9 @@ const CodeTabs = ({
     return (
       <div>
         Error generating code.&nbsp;
-        <a onClick={init} className={styles.cursorPointer}>
+        <Link onClick={init} hover="underline">
           Try again
-        </a>
+        </Link>
       </div>
     );
   }

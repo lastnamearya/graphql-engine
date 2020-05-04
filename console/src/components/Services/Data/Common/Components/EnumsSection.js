@@ -1,8 +1,7 @@
 import React from 'react';
 import Toggle from 'react-toggle';
 
-import { ToolTip, Heading } from '../../../../UIKit/atoms';
-import KnowMoreLink from '../../../../Common/KnowMoreLink/KnowMoreLink';
+import { ToolTip, Heading, Link } from '../../../../UIKit/atoms';
 import styles from '../../../../Common/Common.scss';
 
 const enumCompatibilityDocsUrl =
@@ -19,13 +18,9 @@ export const EnumTableModifyWarning = ({ isEnum }) => {
         * This table is set as an enum. Modifying it may cause your Hasura
         metadata to become inconsistent.
         <br />
-        <a
-          href={enumCompatibilityDocsUrl}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          See enum table requirements.
-        </a>
+        <Link href={enumCompatibilityDocsUrl} type="moreInfo">
+          See enum table requirements
+        </Link>
       </i>
     </div>
   );
@@ -42,13 +37,12 @@ const EnumsSection = ({ isEnum, toggleEnum, loading }) => {
   //     <div>
   //       <i>
   //         * The table must meet some requirements for you to set it as an enum.{' '}
-  //         <a
+  //         <Link
   //           href={enumCompatibilityDocsUrl}
-  //           target="_blank"
-  //           rel="noopener noreferrer"
+  //           type="moreInfo"
   //         >
   //           See requirements.
-  //         </a>
+  //         </Link>
   //       </i>
   //     </div>
   //   );
@@ -62,18 +56,17 @@ const EnumsSection = ({ isEnum, toggleEnum, loading }) => {
           message={
             'Expose the table values as GraphQL enums in the GraphQL API'
           }
-          ml='sm'
-          mr='20px'
+          ml="sm"
+          mr="20px"
         />
-        <KnowMoreLink
-          href={enumCompatibilityDocsUrl}
-          text={'See table requirements'}
-        />
+        <Link type="moreInfo" href={enumCompatibilityDocsUrl}>
+          See table requirements
+        </Link>
       </Heading>
       <div
         className={`${styles.display_flex} ${styles.add_mar_bottom}`}
         title={title}
-        data-toggle='tooltip'
+        data-toggle="tooltip"
       >
         <Toggle checked={isEnum} icons={false} onChange={toggleEnum} />
       </div>

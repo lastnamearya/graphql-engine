@@ -7,13 +7,13 @@ import requestAction from '../../../utils/requestAction';
 import { showErrorNotification } from '../Common/Notification';
 import { getRunSqlQuery } from '../../Common/utils/v1QueryUtils';
 import { versionGT } from '../../../helpers/versionUtils';
-import { Spinner, Heading, Text } from '../../UIKit/atoms';
+import { Spinner, Heading, Text, Link } from '../../UIKit/atoms';
 import styles from './About.scss';
 
 class About extends Component {
   state = {
     consoleAssetVersion: globals.consoleAssetVersion,
-    pgVersion: null
+    pgVersion: null,
   };
 
   componentDidMount() {
@@ -25,13 +25,13 @@ class About extends Component {
         method: 'POST',
         credentials: globalCookiePolicy,
         headers: dataHeaders,
-        body: JSON.stringify(getRunSqlQuery('SELECT version();', false, true))
+        body: JSON.stringify(getRunSqlQuery('SELECT version();', false, true)),
       };
 
       dispatch(requestAction(url, options)).then(
         data => {
           this.setState({
-            pgVersion: data.result[1][0]
+            pgVersion: data.result[1][0],
           });
         },
         error => {
@@ -71,32 +71,30 @@ class About extends Component {
         versionGT(latestStableServerVersion, serverVersion)
       ) {
         updateLinks = (
-          <span className={styles.add_mar_left_mid}>
-            <a
+          <>
+            <Link
               href={
                 'https://github.com/hasura/graphql-engine/releases/tag/' +
                 latestStableServerVersion
               }
               target="_blank"
-              rel="noopener noreferrer"
+              fontStyle="italic"
+              hover="underline"
+              mx="sm"
             >
-              <span>
-                <i>View Changelog</i>
-              </span>
-            </a>
-            <span>
-              &nbsp;<b>&middot;</b>&nbsp;
-            </span>
-            <a
+              View Changelog
+            </Link>
+            <b>&middot;</b>
+            <Link
               href="https://hasura.io/docs/1.0/graphql/manual/deployment/updating.html"
               target="_blank"
-              rel="noopener noreferrer"
+              fontStyle="italic"
+              hover="underline"
+              ml="sm"
             >
-              <span>
-                <i>Update Now</i>
-              </span>
-            </a>
-          </span>
+              Update Now
+            </Link>
+          </>
         );
       }
 
@@ -161,7 +159,7 @@ const mapStateToProps = state => {
   return {
     dataHeaders: state.tables.dataHeaders,
     serverVersion: state.main.serverVersion,
-    latestStableServerVersion: state.main.latestStableServerVersion
+    latestStableServerVersion: state.main.latestStableServerVersion,
   };
 };
 
