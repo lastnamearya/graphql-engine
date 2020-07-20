@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { css } from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 
@@ -10,6 +11,11 @@ import { getPathRoot } from '../Common/utils/urlUtils';
 
 import Spinner from '../Common/Spinner/Spinner';
 import WarningSymbol from '../Common/WarningSymbol/WarningSymbol';
+import { Icon } from '../UIKit/atoms/';
+import logo from './images/white-logo.svg';
+import pixHeart from './images/pix-heart.svg';
+
+import styles from './Main.scss';
 
 import {
   loadServerVersion,
@@ -40,6 +46,7 @@ import {
 } from '../Common/utils/localStorageUtils';
 import ToolTip from '../Common/Tooltip/Tooltip';
 import { setPreReleaseNotificationOptOutInDB } from '../../telemetry/Actions';
+import { ProPopup } from './components/ProPopup';
 
 class Main extends React.Component {
   constructor(props) {
@@ -79,11 +86,11 @@ class Main extends React.Component {
     dispatch(fetchServerConfig());
   }
 
-  toggleProPopup() {
+  toggleProPopup = () => {
     const { dispatch } = this.props;
     dispatch(emitProClickedEvent({ open: !this.state.isPopUpOpen }));
     this.setState({ isPopUpOpen: !this.state.isPopUpOpen });
-  }
+  };
 
   setShowUpdateNotification() {
     const {
@@ -175,10 +182,10 @@ class Main extends React.Component {
     }
   }
 
-  clickProIcon() {
+  onProIconClick = () => {
     this.updateLocalStorageState();
     this.toggleProPopup();
-  }
+  };
 
   closeUpdateBanner() {
     const { updateNotificationVersion } = this.state;
@@ -200,28 +207,13 @@ class Main extends React.Component {
       dispatch,
     } = this.props;
 
-    const { isProClicked } = this.state.proClickState;
-
-    const styles = require('./Main.scss');
+    const {
+      proClickState: { isProClicked },
+      isPopUpOpen,
+    } = this.state;
 
     const appPrefix = '';
 
-    const logo = require('./images/white-logo.svg');
-    const github = require('./images/Github.svg');
-    const discord = require('./images/Discord.svg');
-    const mail = require('./images/mail.svg');
-    const docs = require('./images/docs-logo.svg');
-    const about = require('./images/console-logo.svg');
-    const pixHeart = require('./images/pix-heart.svg');
-    const close = require('./images/x-circle.svg');
-    const monitoring = require('./images/monitoring.svg');
-    const rate = require('./images/rate.svg');
-    const regression = require('./images/regression.svg');
-    const management = require('./images/management.svg');
-    const allow = require('./images/allow-listing.svg');
-    const read = require('./images/read-replica.svg');
-
-    const arrowForwardRed = require('./images/arrow_forward-red.svg');
     const currentLocation = location.pathname;
     const currentActiveBlock = getPathRoot(currentLocation);
 
@@ -253,15 +245,16 @@ class Main extends React.Component {
 
     const getMetadataStatusIcon = () => {
       if (metadata.inconsistentObjects.length === 0) {
-        return <i className={styles.question + ' fa fa-cog'} />;
+        return <Icon className={styles.question} type="settings" size={18} />;
       }
+
       return (
         <div className={styles.question}>
-          <i className={'fa fa-cog'} />
+          <Icon type="settings" />
           <div className={styles.overlappingExclamation}>
             <div className={styles.iconWhiteBackground} />
             <div>
-              <i className={'fa fa-exclamation-circle'} />
+              <Icon type="default" />
             </div>
           </div>
         </div>
@@ -365,7 +358,7 @@ class Main extends React.Component {
                   className={styles.updateBannerClose}
                   onClick={this.closeUpdateBanner.bind(this)}
                 >
-                  <i className={'fa fa-times'} />
+                  <Icon type="close" pointer />
                 </span>
               </div>
             </div>
@@ -392,38 +385,21 @@ class Main extends React.Component {
               src={pixHeart}
               alt={'pix Heart'}
             />
-            {/* <i className={styles.heart + ' fa fa-heart'} /> */}
           </div>,
           <ul
             key="main_love_2"
             className={'dropdown-menu ' + styles.dropdown_menu}
           >
             <div className={styles.dropdown_menu_container}>
-              <div className={styles.closeDropDown}>
-                <i
-                  className="fa fa-close"
-                  onClick={this.closeLoveIcon.bind(this)}
-                />
-                {/*
-                        <img
-                          className={'img-responsive'}
-                          src={closeIcon}
-                          alt={'closeIcon'}
-                          onClick={this.closeLoveIcon.bind(this)}
-                        />
-                        */}
-              </div>
-              {/*
-                      <div className={styles.arrow_up_dropdown} />
-                      <div className={styles.graphqlHeartText}>
-                        Love GraphQL Engine? Shout it from the rooftops!
-                        <br />
-                        Or just spread the word{' '}
-                        <span role="img" aria-label="smile">
-                          😊
-                        </span>
-                      </div>
-                      */}
+              <Icon
+                type="close"
+                onClick={this.closeLoveIcon.bind(this)}
+                pointer
+                color="black.secondary"
+                position="absolute"
+                top="10px"
+                left="20px"
+              />
               <div className={styles.displayFlex}>
                 <li className={styles.pixelText1}>
                   Roses are red, <br />
@@ -431,7 +407,7 @@ class Main extends React.Component {
                   <br />
                   Star us on GitHub,
                   <br />
-                  To make our <i className={'fa fa-heart'} /> go wooooo!
+                  To make our <Icon type="love" size={10} mx="xs" /> go wooooo!
                 </li>
                 <li className={'dropdown-item'}>
                   <a
@@ -447,8 +423,8 @@ class Main extends React.Component {
                       />
                     </div>
                     <div className={styles.pixelText}>
-                      <i className="fa fa-star" />
-                      &nbsp; Star
+                      <Icon type="star" size={12} mr="5px" />
+                      Star
                     </div>
                   </a>
                   {/*
@@ -478,8 +454,8 @@ class Main extends React.Component {
                       />
                     </div>
                     <div className={styles.pixelText}>
-                      <i className="fa fa-twitter" />
-                      &nbsp; Tweet
+                      <Icon type="twitter" size={12} mr="5px" />
+                      Tweet
                     </div>
                   </a>
                 </li>
@@ -490,16 +466,6 @@ class Main extends React.Component {
       }
 
       return loveSectionHtml;
-    };
-
-    const getHelpDropdownPosStyle = () => {
-      let helpDropdownPosStyle = '';
-
-      if (this.state.loveConsentState.isDismissed) {
-        helpDropdownPosStyle = styles.help_dropdown_menu_heart_dismissed;
-      }
-
-      return helpDropdownPosStyle;
     };
 
     const getSidebarItem = (
@@ -525,9 +491,18 @@ class Main extends React.Component {
               }
               to={appPrefix + path}
             >
-              <div className={styles.iconCenter} data-test={block}>
-                <i className={`fa ${icon}`} aria-hidden="true" />
-              </div>
+              <span className={styles.iconCenter} data-test={block}>
+                <Icon
+                  type={icon}
+                  css={
+                    icon === 'schema'
+                      ? css`
+                          transform: rotate(45deg);
+                        `
+                      : ''
+                  }
+                />
+              </span>
               <p>{title}</p>
             </Link>
           </li>
@@ -535,137 +510,78 @@ class Main extends React.Component {
       );
     };
 
-    const renderProPopup = () => {
-      const { isPopUpOpen } = this.state;
-      if (isPopUpOpen) {
-        return (
-          <div className={styles.proPopUpWrapper}>
-            <div className={styles.popUpHeader}>
-              Hasura <span>PRO</span>
-              <img
-                onClick={this.toggleProPopup.bind(this)}
-                className={styles.popUpClose}
-                src={close}
-                alt={'Close'}
-              />
-            </div>
-            <div className={styles.popUpBodyWrapper}>
-              <div className={styles.featuresDescription}>
-                Hasura Pro is an enterprise-ready version of Hasura that comes
-                with the following features:
+    const getVulnerableVersionNotification = () => {
+      let vulnerableVersionNotificationHtml = null;
+
+      // vulnerable version to fixed version mapping
+      const vulnerableVersionsMapping = {
+        'v1.2.0-beta.5': 'v1.2.1',
+        'v1.2.0': 'v1.2.1',
+      };
+
+      if (Object.keys(vulnerableVersionsMapping).includes(serverVersion)) {
+        const fixedVersion = vulnerableVersionsMapping[serverVersion];
+
+        vulnerableVersionNotificationHtml = (
+          <div>
+            <div className={styles.phantom} />{' '}
+            {/* phantom div to prevent overlapping of banner with content. */}
+            <div
+              className={
+                styles.updateBannerWrapper +
+                ' ' +
+                styles.vulnerableVersionBannerWrapper
+              }
+            >
+              <div className={styles.updateBanner}>
+                <span>
+                  <Icon type={'warning'} /> <b>ATTENTION</b>
+                  <span className={styles.middot}> &middot; </span>
+                  This current server version has a security vulnerability.
+                  Please upgrade to <b>{fixedVersion}</b> immediately
+                </span>
+                <span className={styles.middot}> &middot; </span>
+                <a
+                  href={
+                    'https://github.com/hasura/graphql-engine/releases/tag/' +
+                    fixedVersion
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>View Changelog</span>
+                </a>
+                <span className={styles.middot}> &middot; </span>
+                <a
+                  className={styles.updateLink}
+                  href="https://hasura.io/docs/1.0/graphql/manual/deployment/updating.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>Update Now</span>
+                </a>
               </div>
-              <div className={styles.proFeaturesList}>
-                <div className={styles.featuresImg}>
-                  <img src={monitoring} alt={'Monitoring'} />
-                </div>
-                <div className={styles.featuresList}>
-                  <div className={styles.featuresTitle}>
-                    Monitoring/Analytics
-                  </div>
-                  <div className={styles.featuresDescription}>
-                    Complete observability to troubleshoot errors and drill-down
-                    into individual operations.
-                  </div>
-                </div>
-              </div>
-              <div className={styles.proFeaturesList}>
-                <div className={styles.featuresImg}>
-                  <img src={rate} alt={'Rate'} />
-                </div>
-                <div className={styles.featuresList}>
-                  <div className={styles.featuresTitle}>Rate Limiting</div>
-                  <div className={styles.featuresDescription}>
-                    Prevent abuse with role-based rate limits.
-                  </div>
-                </div>
-              </div>
-              <div className={styles.proFeaturesList}>
-                <div className={styles.featuresImg}>
-                  <img src={regression} alt={'Regression'} />
-                </div>
-                <div className={styles.featuresList}>
-                  <div className={styles.featuresTitle}>Regression Testing</div>
-                  <div className={styles.featuresDescription}>
-                    Automatically create regression suites to prevent breaking
-                    changes.
-                  </div>
-                </div>
-              </div>
-              <div className={styles.proFeaturesList}>
-                <div className={styles.featuresImg}>
-                  <img src={management} alt={'Management'} />
-                </div>
-                <div className={styles.featuresList}>
-                  <div className={styles.featuresTitle}>Team Management</div>
-                  <div className={styles.featuresDescription}>
-                    Login to a Hasura project with granular privileges.
-                  </div>
-                </div>
-              </div>
-              <div className={styles.proFeaturesList}>
-                <div className={styles.featuresImg}>
-                  <img src={allow} alt={'allow'} />
-                </div>
-                <div className={styles.featuresList}>
-                  <div className={styles.featuresTitle}>
-                    Allow Listing Workflows
-                  </div>
-                  <div className={styles.featuresDescription}>
-                    Setup allow lists across dev, staging and production
-                    environments with easy workflows.
-                  </div>
-                </div>
-              </div>
-              <div className={styles.proFeaturesList}>
-                <div className={styles.featuresImg}>
-                  <img src={read} alt={'read'} />
-                </div>
-                <div className={styles.featuresList}>
-                  <div className={styles.featuresTitle}>Read Replicas</div>
-                  <div className={styles.featuresDescription}>
-                    Native Read Replica support for enhanced performance and
-                    scalability
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.popUpFooter}>
-              <a
-                href={
-                  'https://hasura.io/getintouch?type=hasuraprodemo&utm_source=console'
-                }
-                target={'_blank'}
-                rel="noopener noreferrer"
-              >
-                Set up a chat to learn more{' '}
-                <img
-                  className={styles.arrow}
-                  src={arrowForwardRed}
-                  alt={'Arrow'}
-                />
-              </a>
             </div>
           </div>
         );
       }
-      return null;
+
+      return vulnerableVersionNotificationHtml;
     };
 
     return (
       <div className={styles.container}>
-        <div className={styles.flexRow}>
-          <div className={styles.sidebar}>
-            <div className={styles.header_logo_wrapper}>
-              <div className={styles.logoParent}>
-                <div className={styles.logo}>
-                  <Link to="/">
-                    <img className="img img-responsive" src={logo} />
-                  </Link>
-                </div>
+        <div className={styles.sidebar}>
+          <div className={styles.header_logo_wrapper}>
+            <div className={styles.logoParent}>
+              <div className={styles.logo}>
                 <Link to="/">
-                  <div className={styles.project_version}>{serverVersion}</div>
+                  <img className="img img-responsive" src={logo} />
                 </Link>
               </div>
+              <Link to="/">
+                <div className={styles.project_version}>{serverVersion}</div>
+              </Link>
             </div>
             <div className={styles.header_items}>
               <ul className={styles.sidebarItems}>
@@ -698,125 +614,50 @@ class Main extends React.Component {
                   'Events',
                   'fa-cloud',
                   tooltips.events,
-                  '/events/manage/triggers'
+                  '/events/data/manage'
                 )}
               </ul>
             </div>
             <div id="dropdown_wrapper" className={styles.clusterInfoWrapper}>
               {getAdminSecretSection()}
-              <div className={styles.helpSection + ' ' + styles.proWrapper}>
+              <div
+                className={`${styles.headerRightNavbarBtn} ${styles.proWrapper}`}
+                onClick={this.onProIconClick}
+              >
                 <span
-                  className={
-                    !isProClicked ? styles.proName : styles.proNameClicked
-                  }
-                  onClick={this.clickProIcon.bind(this)}
+                  className={`
+                    ${isProClicked ? styles.proNameClicked : styles.proName}
+                    ${isPopUpOpen ? styles.navActive : ''}`}
                 >
-                  PRO
+                  CLOUD
                 </span>
-                {renderProPopup()}
+                {isPopUpOpen && <ProPopup toggleOpen={this.toggleProPopup} />}
               </div>
               <Link to="/settings">
-                <div className={styles.helpSection + ' ' + styles.settingsIcon}>
+                <div className={styles.headerRightNavbarBtn}>
                   {getMetadataStatusIcon()}
                   {getSettingsSelectedMarker()}
                 </div>
               </Link>
-              <div className={styles.supportSection}>
-                <div
-                  id="help"
-                  className={styles.helpSection + ' dropdown-toggle'}
-                  data-toggle="dropdown"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  <i className={styles.question + ' fa fa-question'} />
-                </div>
-                <ul
-                  className={
-                    'dropdown-menu ' +
-                    styles.help_dropdown_menu +
-                    ' ' +
-                    getHelpDropdownPosStyle()
-                  }
-                  aria-labelledby="help"
-                >
-                  <div className={styles.help_dropdown_menu_container}>
-                    <li className={'dropdown-item'}>
-                      <a
-                        href="https://github.com/hasura/graphql-engine/issues"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img
-                          className={'img-responsive'}
-                          src={github}
-                          alt={'github'}
-                        />
-                        <span>Report bugs & suggest improvements</span>
-                      </a>
-                    </li>
-                    <li className={'dropdown-item'}>
-                      <a
-                        href="https://discordapp.com/invite/vBPpJkS"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img
-                          className={'img-responsive'}
-                          src={discord}
-                          alt={'discord'}
-                        />
-                        <span>Join discord community forum</span>
-                      </a>
-                    </li>
-                    <li className={'dropdown-item'}>
-                      <a href="mailto:support@hasura.io">
-                        <img
-                          className={'img-responsive'}
-                          src={mail}
-                          alt={'mail'}
-                        />
-                        <span>Reach out ({'support@hasura.io'})</span>
-                      </a>
-                    </li>
-                    <li className={'dropdown-item'}>
-                      <a
-                        href="https://hasura.io/docs/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img
-                          className={'img-responsive'}
-                          src={docs}
-                          alt={'docs'}
-                        />
-                        <span>Head to docs</span>
-                      </a>
-                    </li>
-                    <li className={'dropdown-item'}>
-                      <Link to="/about">
-                        <img
-                          className={'img-responsive'}
-                          src={about}
-                          alt={'about'}
-                        />
-                        <span>About</span>
-                      </Link>
-                    </li>
-                  </div>
-                </ul>
-              </div>
-
+              <a
+                id="help"
+                href="https://hasura.io/help"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className={styles.headerRightNavbarBtn}>HELP</div>
+              </a>
               {getLoveSection()}
             </div>
           </div>
-
-          <div className={styles.main + ' container-fluid'}>
-            {getMainContent()}
-          </div>
-
-          {getUpdateNotification()}
         </div>
+
+        <div className={styles.main + ' container-fluid'}>
+          {getMainContent()}
+        </div>
+
+        {getUpdateNotification()}
+        {getVulnerableVersionNotification()}
       </div>
     );
   }

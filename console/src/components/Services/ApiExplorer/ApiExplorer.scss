@@ -74,12 +74,6 @@
   opacity: 0.1;
 }
 
-.panelInFocus {
-}
-
-.requestInFocus {
-}
-
 .apiRequestBody {
   margin: 20px 0;
   height: 100%;
@@ -305,12 +299,12 @@
     font-size: 16px;
     float: right;
     display: inline-block;
+    margin-right: 3px;
   }
 
   .showAdminSecret,
   .showInspector {
     cursor: pointer;
-    padding-right: 8px;
     font-size: 16px;
     float: left;
     display: inline-block;
@@ -826,4 +820,15 @@ label {
       margin-bottom: 15px;
     }
   }
+}
+
+.graphiqlModeToggle {
+  float: right;
+}
+
+.headerInfoIcon {
+  cursor: pointer;
+  padding-right: 8px;
+  font-size: 14px;
+  display: inline-block;
 }

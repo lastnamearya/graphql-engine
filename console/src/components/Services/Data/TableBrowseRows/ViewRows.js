@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import 'react-table/react-table.css';
+
 import '../../../Common/TableCommon/ReactTableOverrides.css';
 import DragFoldTable, {
   getColWidth,
 } from '../../../Common/TableCommon/DragFoldTable';
-
 import Dropdown from '../../../Common/Dropdown/Dropdown';
-
-import InvokeManualTrigger from '../../EventTrigger/Common/InvokeManualTrigger/InvokeManualTrigger';
+import InvokeManualTrigger from '../../Events/EventTriggers/InvokeManualTrigger/InvokeManualTrigger';
 
 import {
   vExpandRel,
@@ -34,6 +33,7 @@ import { ordinalColSort } from '../utils';
 import FilterQuery from './FilterQuery';
 import Spinner from '../../../Common/Spinner/Spinner';
 import Button from '../../../Common/Button/Button';
+import { Icon } from '../../../UIKit/atoms';
 
 import { E_SET_EDITITEM } from './EditActions';
 import { I_SET_CLONE } from '../TableInsertItem/InsertActions';
@@ -46,6 +46,7 @@ import {
   getRelationshipRefTable,
   getTableName,
   getTableSchema,
+  arrayToPostgresArray,
 } from '../../../Common/utils/pgUtils';
 import { updateSchemaInfo } from '../DataActions';
 import {
@@ -84,6 +85,7 @@ const ViewRows = ({
   triggeredFunction,
   location,
   readOnlyMode,
+  shouldHidePagination,
 }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   useEffect(() => {
@@ -169,11 +171,11 @@ const ViewRows = ({
     _columns.map(col => {
       const columnName = col.column_name;
 
-      let sortIcon = 'fa-sort';
+      let sortIcon = 'sort';
       if (curQuery.order_by && curQuery.order_by.length) {
         curQuery.order_by.forEach(orderBy => {
           if (orderBy.column === columnName) {
-            sortIcon = orderBy.type === 'asc' ? 'fa-caret-up' : 'fa-caret-down';
+            sortIcon = orderBy.type === 'asc' ? 'caretUp' : 'caretDown';
           }
         });
       }
@@ -182,7 +184,7 @@ const ViewRows = ({
         Header: (
           <div className="ellipsis">
             <span className={styles.tableHeaderCell}>
-              {columnName} <i className={'fa ' + sortIcon} />
+              {columnName} <Icon type={sortIcon} size={12} pl="xs" />
             </span>
           </div>
         ),
@@ -234,6 +236,12 @@ const ViewRows = ({
         pkClause[k.column_name] = row[k.column_name];
       });
     }
+
+    Object.keys(pkClause).forEach(key => {
+      if (Array.isArray(pkClause[key])) {
+        pkClause[key] = arrayToPostgresArray(pkClause[key]);
+      }
+    });
 
     return pkClause;
   };
@@ -301,22 +309,22 @@ const ViewRows = ({
           };
 
           if (isExpanded) {
-            icon = 'fa-compress';
+            icon = 'compress';
             title = 'Collapse row';
             handleClick = handleCollapse;
           } else {
-            icon = 'fa-expand';
+            icon = 'expand';
             title = 'Expand row';
             handleClick = handleExpand;
           }
 
-          const expanderIcon = <i className={`fa ${icon}`} />;
+          const expanderIcon = <Icon type={icon} size={10} />;
 
           return getActionButton('expand', expanderIcon, title, handleClick);
         };
 
         const getEditButton = pkClause => {
-          const editIcon = <i className="fa fa-edit" />;
+          const editIcon = <Icon type="edit" size={10} />;
 
           const handleEditClick = () => {
             dispatch({ type: E_SET_EDITITEM, oldItem: row, pkClause });
@@ -337,7 +345,7 @@ const ViewRows = ({
         };
 
         const getDeleteButton = pkClause => {
-          const deleteIcon = <i className="fa fa-trash" />;
+          const deleteIcon = <Icon type="delete" size={10} />;
 
           const handleDeleteClick = () => {
             setSelectedRows(prev =>
@@ -358,7 +366,7 @@ const ViewRows = ({
         };
 
         const getCloneButton = () => {
-          const cloneIcon = <i className="fa fa-clone" />;
+          const cloneIcon = <Icon type="clone" size={10} />;
 
           const handleCloneClick = () => {
             dispatch({ type: I_SET_CLONE, clone: row });
@@ -403,13 +411,14 @@ const ViewRows = ({
             };
           });
 
-          const triggerIcon = <i className="fa fa-caret-square-o-right" />;
+          const triggerIcon = <Icon type="playbox" />;
           const triggerTitle = 'Invoke event trigger';
 
           const triggerBtn = getActionButton(
             'trigger',
             triggerIcon,
             triggerTitle,
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             () => {}
           );
 
@@ -702,7 +711,7 @@ const ViewRows = ({
             onClick={handleDeleteItems}
             data-test="bulk-delete"
           >
-            <i className="fa fa-trash" />
+            <Icon type="delete" size={10} />
           </button>
         </div>
       );
@@ -943,6 +952,7 @@ const ViewRows = ({
           persistColumnOrderChange(curTableName, currentSchema, reorderData)
         }
         defaultReorders={columnsOrder}
+        showPagination={!shouldHidePagination}
       />
     );
   };

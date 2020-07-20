@@ -1,14 +1,16 @@
 import React from 'react';
 import { getActionPermissions, findActionPermission } from '../utils';
 import Helmet from 'react-helmet';
+
 import { fetchRoleList } from '../../Data/DataActions';
 import PermTableHeader from '../../../Common/Permissions/TableHeader';
 import PermTableBody from '../../../Common/Permissions/TableBody';
 import { permissionsSymbols } from '../../../Common/Permissions/PermissionSymbols';
 import { permOpenEdit, permCloseEdit, permSetRoleName } from './reducer';
-import styles from '../../../Common/Permissions/PermissionStyles.scss';
 import PermissionEditor from './PermissionEditor';
 import { setDefaults } from './reducer';
+import { Icon } from '../../../UIKit/atoms';
+import styles from '../../../Common/Permissions/PermissionStyles.scss';
 
 const queryTypes = ['Permission'];
 
@@ -19,6 +21,7 @@ const Permissions = ({
   permissionEdit,
   isEditing,
   isFetching,
+  readOnlyMode = false,
 }) => {
   React.useEffect(() => {
     dispatch(fetchRoleList());
@@ -53,13 +56,17 @@ const Permissions = ({
         dispatch(permSetRoleName(e.target.value));
       };
 
-      const getEditIcon = () => {
-        return (
-          <span className={styles.editPermsIcon}>
-            <i className="fa fa-pencil" aria-hidden="true" />
-          </span>
-        );
-      };
+      const getEditIcon = () => (
+        <Icon
+          type="pencil"
+          size="12px"
+          pointer
+          className={styles.editPermsIcon}
+          position="absolute"
+          right="12px"
+          color="#337ab7"
+        />
+      );
 
       // get root types for a given role
       const getQueryTypes = (role, isNewRole) => {
@@ -79,22 +86,23 @@ const Permissions = ({
             dispatch(permCloseEdit());
           };
 
-          const isEditAllowed = role !== 'admin';
           const isCurrEdit =
             isEditing &&
             (permissionEdit.role === role ||
               (permissionEdit.isNewRole && permissionEdit.newRole === role));
           let editIcon = '';
           let className = '';
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           let onClick = () => {};
-          if (isEditAllowed) {
+          if (role !== 'admin' && !readOnlyMode) {
             editIcon = getEditIcon();
 
-            className += styles.clickableCell;
-            onClick = dispatchOpenEdit(queryType);
             if (isCurrEdit) {
               onClick = dispatchCloseEdit;
               className += ` ${styles.currEdit}`;
+            } else {
+              className += styles.clickableCell;
+              onClick = dispatchOpenEdit(queryType);
             }
           }
 
@@ -169,12 +177,14 @@ const Permissions = ({
       />
       {getPermissionsTable()}
       <div className={`${styles.add_mar_bottom}`}>
-        <PermissionEditor
-          permissionEdit={permissionEdit}
-          dispatch={dispatch}
-          isFetching={isFetching}
-          isEditing={isEditing}
-        />
+        {!readOnlyMode && (
+          <PermissionEditor
+            permissionEdit={permissionEdit}
+            dispatch={dispatch}
+            isFetching={isFetching}
+            isEditing={isEditing}
+          />
+        )}
       </div>
     </div>
   );

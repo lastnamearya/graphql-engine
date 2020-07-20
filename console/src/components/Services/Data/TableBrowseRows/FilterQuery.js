@@ -25,9 +25,10 @@ import {
 import { setDefaultQuery, runQuery, setOffset } from './FilterActions';
 import Button from '../../../Common/Button/Button';
 import ReloadEnumValuesButton from '../Common/Components/ReloadEnumValuesButton';
-import styles from '../../../Common/FilterQuery/FilterQuery.scss';
 import { getPersistedPageSize } from './localStorageUtils';
 import { isEmpty } from '../../../Common/utils/jsUtils';
+import { Icon } from '../../../UIKit/atoms';
+import styles from '../../../Common/FilterQuery/FilterQuery.scss';
 
 const history = createHistory();
 
@@ -107,14 +108,18 @@ const renderWheres = (whereAnd, tableSchema, dispatch) => {
     const dSetFilterOp = e => {
       dispatch(setFilterOp(e.target.value, i));
     };
+
     let removeIcon = null;
+
     if (i + 1 < whereAnd.length) {
       removeIcon = (
-        <i
-          className="fa fa-times"
+        <Icon
+          type="close"
+          pointer
           onClick={() => {
             dispatch(removeFilter(i));
           }}
+          mt="sm"
           data-test={`clear-filter-${i}`}
         />
       );
@@ -158,11 +163,13 @@ const renderSorts = (orderBy, tableSchema, dispatch) => {
     let removeIcon = null;
     if (i + 1 < orderBy.length) {
       removeIcon = (
-        <i
-          className="fa fa-times"
+        <Icon
+          type="close"
           onClick={() => {
             dispatch(removeOrder(i));
           }}
+          pointer
+          mt="sm"
           data-test={`clear-sorts-${i}`}
         />
       );

@@ -1,23 +1,9 @@
 import React from 'react';
-import styles from './PermissionStyles.scss';
+
+import { Icon } from '../../UIKit/atoms';
 
 export const permissionsSymbols = {
-  fullAccess: (
-    <i
-      className={'fa fa-check ' + styles.permissionSymbolFA}
-      aria-hidden="true"
-    />
-  ),
-  noAccess: (
-    <i
-      className={'fa fa-times ' + styles.permissionSymbolNA}
-      aria-hidden="true"
-    />
-  ),
-  partialAccess: (
-    <i
-      className={'fa fa-filter ' + styles.permissionSymbolPA}
-      aria-hidden="true"
-    />
-  ),
+  fullAccess: <Icon color="green.original" type="check" size={16} pt="6px" />,
+  noAccess: <Icon type="close" color="red.primary" size={16} pt="xs" />,
+  partialAccess: <Icon type="filter" size={16} pt="6px" />,
 };

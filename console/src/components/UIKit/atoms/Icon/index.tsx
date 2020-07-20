@@ -42,9 +42,8 @@ import {
   FaCaretLeft,
   FaRegClone,
   FaRegCaretSquareRight,
-  FaCopy,
+  FaRegCopy,
   FaExternalLinkAlt,
-  FaTable,
   FaFilter,
   FaWrench,
   FaRegPaperPlane,
@@ -53,8 +52,8 @@ import {
   FaDownload,
 } from 'react-icons/fa';
 
-import { Theme } from '../../theme';
-import { StyledIcon } from './Icon';
+import { StyledIcon, StyledIconProps } from './Icon';
+import { TableIcon } from './Table';
 
 const iconReferenceMap = {
   success: FaCheckCircle,
@@ -100,9 +99,9 @@ const iconReferenceMap = {
   caretRight: FaCaretRight,
   caretLeft: FaCaretLeft,
   clone: FaRegClone,
-  copy: FaCopy,
+  copy: FaRegCopy,
   link: FaExternalLinkAlt,
-  table: FaTable,
+  table: TableIcon,
   filter: FaFilter,
   wrench: FaWrench,
   send: FaRegPaperPlane,
@@ -111,19 +110,25 @@ const iconReferenceMap = {
   download: FaDownload,
 };
 
-export type IconProps = {
-  pointer: boolean;
-  size: number;
-  type: keyof Theme['icon'];
-};
+export interface IconProps extends StyledIconProps {
+  type: keyof typeof iconReferenceMap;
+}
 
-export const Icon: React.FC<IconProps> = props => {
-  const { type } = props;
+export const Icon = (props: IconProps) => {
+  const { type, ...rest } = props;
   const CurrentActiveIcon = iconReferenceMap[type]
     ? iconReferenceMap[type]
     : iconReferenceMap.default;
-  return <StyledIcon as={CurrentActiveIcon} {...props} aria-hidden="true" />;
+
+  return (
+    <StyledIcon
+      {...rest}
+      aria-hidden="true"
+      as={CurrentActiveIcon as any /* TODO */}
+    />
+  );
 };
+
 Icon.defaultProps = {
   size: 14,
 };

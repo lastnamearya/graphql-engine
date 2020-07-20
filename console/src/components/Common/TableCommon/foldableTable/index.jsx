@@ -1,18 +1,20 @@
 import React from 'react';
 
+import { Icon } from '../../../UIKit/atoms';
+
 const defaultFoldIconComponent = ({ collapsed, name }) => {
   let icon;
   let title;
 
   if (collapsed) {
-    icon = 'fa-caret-right';
+    icon = 'caretRight';
     title = name ? `Expand column "${name}"` : 'Expand column';
   } else {
-    icon = 'fa-caret-left';
+    icon = 'caretLeft';
     title = 'Collapse column';
   }
 
-  return <i className={'fa ' + icon} title={title} />;
+  return <Icon type={icon} title={title} size={12} />;
 };
 
 const defaultFoldButtonComponent = ({ header, collapsed, icon, onClick }) => {
@@ -21,7 +23,7 @@ const defaultFoldButtonComponent = ({ header, collapsed, icon, onClick }) => {
     position: 'absolute',
     fontSize: '14px',
     top: 'calc(50% - 8px)',
-    left: '8px',
+    left: '6px',
     padding: '5px',
     margin: '-5px -5px -5px -5px',
   };
@@ -47,7 +49,7 @@ export default ReactTable => {
       };
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
       if (this.state.resized !== newProps.resized) {
         this.setState({ resized: newProps.resized });
       }
@@ -194,7 +196,7 @@ export default ReactTable => {
     };
 
     applyFoldableForColumns = columns => {
-      return columns.map((col, index) => {
+      return columns.filter(Boolean).map((col, index) => {
         if (!col.foldable) return col;
 
         //If col don't have id then generate id based on index

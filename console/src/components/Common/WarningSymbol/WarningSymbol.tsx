@@ -2,7 +2,8 @@ import React from 'react';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
-import styles from './WarningSymbol.scss';
+import { Icon } from '../../UIKit/atoms';
+import styles from '../Common.scss';
 
 export interface WarningSymbolProps {
   tooltipText: string;
@@ -20,9 +21,7 @@ const WarningSymbol: React.FC<WarningSymbolProps> = ({
   return (
     <div className={styles.display_inline}>
       <OverlayTrigger placement={tooltipPlacement} overlay={tooltip}>
-        <span>
-          <WarningIcon customStyle={customStyle} />
-        </span>
+        <WarningIcon customStyle={customStyle} />
       </OverlayTrigger>
     </div>
   );
@@ -35,12 +34,7 @@ export interface WarningIconProps {
 export const WarningIcon: React.FC<WarningIconProps> = ({
   customStyle = '',
 }) => {
-  return (
-    <i
-      className={`fa fa-exclamation-triangle ${styles.warningSymbol} ${customStyle}`}
-      aria-hidden="true"
-    />
-  );
+  return <Icon type="warning" color="red.primary" className={customStyle} />;
 };
 
 export default WarningSymbol;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
@@ -29,7 +30,7 @@ class ViewTable extends Component {
     this.getInitialData(this.props.tableName);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.tableName !== this.props.tableName) {
       this.getInitialData(nextProps.tableName);
     }
@@ -147,6 +148,7 @@ class ViewTable extends Component {
         schemas={schemas}
         curDepth={0}
         count={exists(count) ? count : estimatedCount}
+        shouldHidePagination={!exists(count) && !estimatedCount}
         dispatch={dispatch}
         expandedRow={expandedRow}
         manualTriggers={manualTriggers}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../../Common/TableCommon/Table.scss';
+
 import {
   manualRelRTableChanged,
   manualRelTypeChanged,
@@ -8,6 +8,8 @@ import {
   manualRelRSchemaChanged,
 } from './Actions';
 import { updateSchemaInfo } from '../DataActions';
+import { Icon } from '../../../UIKit/atoms';
+import styles from '../../../Common/TableCommon/Table.scss';
 
 const ManualRelationshipSelector = ({
   tableSchema,
@@ -90,18 +92,22 @@ const ManualRelationshipSelector = ({
           onChange={dispatchSetRefSchema}
           disabled={!relAdd.relType || !relAdd.relName}
         >
-          {// default unselected option
-          relAdd.rSchema === '' && (
-            <option value={''} disabled>
-              {'-- reference schema --'}
-            </option>
-          )}
-          {// all reference schema options
-          schemaList.map((rs, j) => (
-            <option key={j} value={rs}>
-              {rs}
-            </option>
-          ))}
+          {
+            // default unselected option
+            relAdd.rSchema === '' && (
+              <option value={''} disabled>
+                {'-- reference schema --'}
+              </option>
+            )
+          }
+          {
+            // all reference schema options
+            schemaList.map((rs, j) => (
+              <option key={j} value={rs}>
+                {rs}
+              </option>
+            ))
+          }
         </select>
       </div>
     );
@@ -199,9 +205,13 @@ const ManualRelationshipSelector = ({
             removeIcon = null;
           } else {
             removeIcon = (
-              <i
-                className={`${styles.fontAwosomeClose} fa-lg fa fa-times`}
+              <Icon
+                type="close"
                 onClick={dispatchRemoveCol}
+                pointer
+                size={15}
+                ml="10px"
+                mt="xs"
               />
             );
           }

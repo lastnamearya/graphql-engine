@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+
 import Button from '../../../Common/Button/Button';
 import { dropInconsistentObjects } from '../Actions';
 import { permissionTypes, getTableNameFromDef } from '../utils';
 import metaDataStyles from '../Settings.scss';
-import styles from '../../../Common/TableCommon/Table.scss';
-import CheckIcon from '../../../Common/Icons/Check';
-import CrossIcon from '../../../Common/Icons/Cross';
 import { getConfirmation } from '../../../Common/utils/jsUtils';
 import ReloadMetadata from '../MetadataOptions/ReloadMetadata';
+import { Icon } from '../../../UIKit/atoms';
+import styles from '../../../Common/TableCommon/Table.scss';
 
 const MetadataStatus = ({ dispatch, metadata }) => {
   const [shouldShowErrorBanner, toggleErrorBanner] = useState(true);
@@ -41,6 +41,11 @@ const MetadataStatus = ({ dispatch, metadata }) => {
               definition = `relationship of table "${getTableNameFromDef(
                 ico.definition.table
               )}"`;
+            } else if (ico.type === 'remote_relationship') {
+              name = ico.definition.name;
+              definition = `relationship between table "${getTableNameFromDef(
+                ico.definition.table
+              )}" and remote schema "${ico.definition.remote_schema}"`;
             } else if (permissionTypes.includes(ico.type)) {
               name = `${ico.definition.role}-permission`;
               definition = `${ico.type} on table "${getTableNameFromDef(
@@ -59,8 +64,10 @@ const MetadataStatus = ({ dispatch, metadata }) => {
               )}"`;
             } else if (ico.type === 'remote_schema') {
               name = ico.definition.name;
-              let url = `"${ico.definition.definition.url ||
-                ico.definition.definition.url_from_env}"`;
+              let url = `"${
+                ico.definition.definition.url ||
+                ico.definition.definition.url_from_env
+              }"`;
               if (ico.definition.definition.url_from_env) {
                 url = `the url from the value of env var ${url}`;
               }
@@ -100,7 +107,7 @@ const MetadataStatus = ({ dispatch, metadata }) => {
         <div className={styles.add_mar_top}>
           <div className={metaDataStyles.content_width}>
             <div className={styles.display_flex}>
-              <CheckIcon className={metaDataStyles.add_mar_right_small} />
+              <Icon type="check" color="green.original" mr="sm" />
               <h4>GraphQL Engine metadata is consistent with database</h4>
             </div>
           </div>
@@ -112,7 +119,7 @@ const MetadataStatus = ({ dispatch, metadata }) => {
       <div className={styles.add_mar_top}>
         <div className={metaDataStyles.content_width}>
           <div className={styles.display_flex}>
-            <CrossIcon className={metaDataStyles.add_mar_right_small} />
+            <Icon type="close" color="red.primary" mr="sm" />
             <h4> GraphQL Engine metadata is inconsistent with database </h4>
           </div>
           <div className={styles.add_mar_top}>
@@ -183,18 +190,16 @@ const MetadataStatus = ({ dispatch, metadata }) => {
     }
     return (
       <div className={`${styles.errorBanner} alert alert-danger`}>
-        <i
-          className={`${styles.add_mar_right_small} ${styles.fontStyleNormal} fa fa-exclamation-circle`}
-          aria-hidden="true"
-        />
+        <Icon type="error" mr="xs" />
         <strong>
           You have been redirected because your GraphQL Engine metadata is in an
           inconsistent state
         </strong>
-        <i
-          className={`${styles.align_right} ${styles.fontStyleNormal} ${styles.cursorPointer} fa fa-times`}
-          aria-hidden="true"
+        <Icon
+          type="close"
           onClick={dismissErrorBanner}
+          pointer
+          className={styles.align_right}
         />
       </div>
     );
@@ -206,9 +211,7 @@ const MetadataStatus = ({ dispatch, metadata }) => {
       <div
         className={`${styles.clear_fix} ${styles.padd_left} ${styles.padd_top} ${metaDataStyles.metadata_wrapper} container-fluid`}
       >
-        <h2 className={`${styles.heading_text} ${styles.remove_pad_bottom}`}>
-          Hasura Metadata Status
-        </h2>
+        <h2 className={styles.headerText}>Hasura Metadata Status</h2>
         {content()}
       </div>
     </div>

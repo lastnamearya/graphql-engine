@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { push } from 'react-router-redux';
 
 import Modal from '../../../Common/Modal/Modal';
 import Button from '../../../Common/Button/Button';
-
-import styles from './PermissionsSummary.scss';
+import { Icon } from '../../../UIKit/atoms';
 
 import { getTablePermissionsRoute } from '../../../Common/utils/routesUtils';
 import { permissionsSymbols } from '../../../Common/Permissions/PermissionSymbols';
@@ -23,7 +23,11 @@ import {
 import { getConfirmation } from '../../../Common/utils/jsUtils';
 
 import { updateSchemaInfo } from '../DataActions';
-import { copyRolePermissions, permOpenEdit } from '../TablePermissions/Actions';
+import {
+  copyRolePermissions,
+  permOpenEdit,
+  deleteRoleGlobally,
+} from '../TablePermissions/Actions';
 
 import {
   getAllRoles,
@@ -32,6 +36,10 @@ import {
   getTablePermissionsByRoles,
   getPermissionRowAccessSummary,
 } from './utils';
+import styles from './PermissionsSummary.scss';
+
+import Header from './Header';
+import RolesHeader from './RolesHeader';
 
 class PermissionsSummary extends Component {
   initState = {
@@ -142,18 +150,21 @@ class PermissionsSummary extends Component {
       );
     };
 
-    const getActionIcon = (faIconType, onClick = null) => {
+    const getActionIcon = (iconType, onClick = null) => {
       return (
-        <i
-          className={`fa ${faIconType} ${styles.actionIcon}`}
-          aria-hidden="true"
+        <Icon
+          type={iconType}
+          color="blue.primary"
+          size={12}
+          pointer
           onClick={onClick}
+          className={styles.actionIcon}
         />
       );
     };
 
     const getEditIcon = () => {
-      return getActionIcon('fa-pencil');
+      return getActionIcon('pencil');
     };
 
     // ------------------------------------------------------------------------------
@@ -182,52 +193,6 @@ class PermissionsSummary extends Component {
       );
     };
 
-    const getHeader = (
-      content,
-      selectable,
-      isSelected,
-      onClick,
-      actionBtn = null,
-      key = null
-    ) => {
-      const getContents = () => {
-        let headerContent;
-
-        if (!actionBtn) {
-          headerContent = content;
-        } else {
-          headerContent = (
-            <div
-              className={
-                styles.actionCell +
-                ' ' +
-                styles.display_flex +
-                ' ' +
-                styles.flex_space_between
-              }
-            >
-              <div>{content}</div>
-              <div>{actionBtn}</div>
-            </div>
-          );
-        }
-
-        return headerContent;
-      };
-
-      return (
-        <th
-          key={key || content}
-          onClick={selectable ? onClick : null}
-          className={`${selectable ? styles.cursorPointer : ''} ${
-            isSelected ? styles.selected : ''
-          }`}
-        >
-          {getContents()}
-        </th>
-      );
-    };
-
     const getCellOnClick = (table, role, action) => {
       return () => {
         dispatch(
@@ -247,66 +212,46 @@ class PermissionsSummary extends Component {
       };
     };
 
-    const getRolesHeaders = (selectable = true, selectedFirst = false) => {
-      const rolesHeaders = [];
+    const copyOnClick = (e, role) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-      if (!allRoles.length) {
-        rolesHeaders.push(getHeader('No roles', false));
-      } else {
-        allRoles.forEach(role => {
-          const isCurrRole = currRole === role;
+      this.setState({
+        copyState: {
+          ...copyState,
+          copyFromRole: role,
+          copyFromTable: currTable ? getTableNameWithSchema(currTable) : 'all',
+          copyFromAction: currRole ? 'all' : currAction,
+        },
+      });
+    };
 
-          const setRole = () => {
-            this.setState({ currRole: isCurrRole ? null : role });
-            window.scrollTo(0, 0);
-          };
+    const deleteOnClick = (e, role) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-          const getCopyBtn = () => {
-            const copyOnClick = e => {
-              e.preventDefault();
-              e.stopPropagation();
+      const deleteConfirmed = getConfirmation(
+        `This will delete all permissions for the role: "${role}" for all entities in the current Postgres schema`,
+        true,
+        role
+      );
 
-              this.setState({
-                copyState: {
-                  ...copyState,
-                  copyFromRole: role,
-                  copyFromTable: currTable
-                    ? getTableNameWithSchema(currTable)
-                    : 'all',
-                  copyFromAction: currRole ? 'all' : currAction,
-                },
-              });
-            };
-
-            return (
-              <Button
-                color="white"
-                size="xs"
-                onClick={copyOnClick}
-                title="Copy permissions"
-              >
-                {getActionIcon('fa-copy')}
-              </Button>
-            );
-          };
-
-          const roleHeader = getHeader(
-            role,
-            selectable,
-            isCurrRole,
-            setRole,
-            getCopyBtn()
-          );
-
-          if (selectedFirst && isCurrRole) {
-            rolesHeaders.unshift(roleHeader);
-          } else {
-            rolesHeaders.push(roleHeader);
-          }
-        });
+      if (deleteConfirmed) {
+        dispatch(deleteRoleGlobally(role));
       }
+    };
 
-      return rolesHeaders;
+    const setRole = (role, isCurrRole) => {
+      this.setState({ currRole: isCurrRole ? null : role });
+      window.scrollTo(0, 0);
+    };
+
+    const defaultRolesHeaderProps = {
+      allRoles,
+      currentRole: currRole,
+      onCopyClick: copyOnClick,
+      onDeleteClick: deleteOnClick,
+      setRole,
     };
 
     const getRolesCells = (table, roleCellRenderer) => {
@@ -366,7 +311,9 @@ class PermissionsSummary extends Component {
 
       if (!currSchemaTrackedTables.length) {
         tablesRows.push(
-          <tr key={'No tables'}>{getHeader('No tables', false)}</tr>
+          <tr key={'No tables'}>
+            <Header content="No tables" selectable={false} />
+          </tr>
         );
       } else {
         currSchemaTrackedTables.forEach((table, i) => {
@@ -385,13 +332,15 @@ class PermissionsSummary extends Component {
               });
             };
 
-            return getHeader(
-              displayTableName(table),
-              selectable,
-              isCurrTable,
-              setTable,
-              null,
-              tableName
+            return (
+              <Header
+                content={displayTableName(table)}
+                selectable={selectable}
+                isSelected={isCurrTable}
+                onClick={setTable}
+                actionButtons={[]}
+                key={tableName}
+              />
             );
           };
 
@@ -631,7 +580,7 @@ class PermissionsSummary extends Component {
             <thead>
               <tr>
                 {getActionSelector()}
-                {getRolesHeaders(false)}
+                <RolesHeader selectable={false} {...defaultRolesHeaderProps} />
               </tr>
             </thead>
             <tbody>
@@ -656,7 +605,11 @@ class PermissionsSummary extends Component {
           return (
             <tr>
               {getBackBtn('currRole')}
-              {getRolesHeaders(true, true)}
+              <RolesHeader
+                selectable
+                selectedFirst
+                {...defaultRolesHeaderProps}
+              />
             </tr>
           );
         };
@@ -715,7 +668,7 @@ class PermissionsSummary extends Component {
         return (
           <tr>
             {getActionSelector()}
-            {getRolesHeaders()}
+            <RolesHeader {...defaultRolesHeaderProps} />
           </tr>
         );
       };
@@ -948,7 +901,7 @@ class PermissionsSummary extends Component {
               title="Create new role"
               className={styles.add_mar_left_mid}
             >
-              <i className="fa fa-plus" aria-hidden="true" />
+              <Icon type="add" />
             </Button>
           </div>
         );

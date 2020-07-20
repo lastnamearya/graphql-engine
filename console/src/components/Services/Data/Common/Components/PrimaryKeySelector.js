@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { Icon } from '../../../../UIKit/atoms';
 import styles from '../../../../Common/TableCommon/Table.scss';
 
 const PrimaryKeySelector = ({ primaryKeys, columns, setPk, dispatch }) => {
@@ -49,10 +51,14 @@ const PrimaryKeySelector = ({ primaryKeys, columns, setPk, dispatch }) => {
         removeIcon = null;
       } else {
         removeIcon = (
-          <i
-            className={`${styles.fontAwosomeClose} fa-lg fa fa-times`}
+          <Icon
+            type="close"
             data-test={`remove-pk-column-${i}`}
             onClick={dispatchRemove}
+            ml="10px"
+            mt="xs"
+            size={15}
+            pointer
           />
         );
       }

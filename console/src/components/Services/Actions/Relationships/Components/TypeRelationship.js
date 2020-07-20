@@ -22,6 +22,7 @@ import {
 import { addActionRel, removeActionRel } from '../../ServerIO';
 import { showErrorNotification } from '../../../Common/Notification';
 import tableStyles from '../../../../Common/TableCommon/TableStyles.scss';
+import { Icon } from '../../../../UIKit/atoms';
 
 const RelationshipEditor = ({
   objectType,
@@ -189,18 +190,22 @@ const RelationshipEditor = ({
           onChange={setRelRefSchema}
           disabled={!name}
         >
-          {// default unselected option
-          refSchema === '' && (
-            <option value={''} disabled>
-              {'-- reference schema --'}
-            </option>
-          )}
-          {// all reference schema options
-          orderedSchemaList.map((rs, j) => (
-            <option key={j} value={rs}>
-              {rs}
-            </option>
-          ))}
+          {
+            // default unselected option
+            refSchema === '' && (
+              <option value={''} disabled>
+                {'-- reference schema --'}
+              </option>
+            )
+          }
+          {
+            // all reference schema options
+            orderedSchemaList.map((rs, j) => (
+              <option key={j} value={rs}>
+                {rs}
+              </option>
+            ))
+          }
         </select>
       </div>
     );
@@ -285,10 +290,7 @@ const RelationshipEditor = ({
             removeIcon = null;
           } else {
             removeIcon = (
-              <i
-                className={`${styles.fontAwosomeClose} fa-lg fa fa-times`}
-                onClick={removeField}
-              />
+              <Icon type="close" onClick={removeField} pointer mt="sm" />
             );
           }
 
@@ -370,7 +372,7 @@ const RelationshipEditor = ({
 };
 
 const RelEditor = props => {
-  const { dispatch, relConfig, objectType, isNew } = props;
+  const { dispatch, relConfig, objectType, isNew, readOnlyMode } = props;
 
   const [relConfigState, setRelConfigState] = React.useState(null);
 
@@ -448,6 +450,7 @@ const RelEditor = props => {
       removeFunc={removeFunc}
       expandButtonText={expandButtonText}
       collapseButtonText={collapseButtonText}
+      readOnlyMode={readOnlyMode}
     />
   );
 };

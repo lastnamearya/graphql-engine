@@ -15,6 +15,8 @@ import {
 import { VIEW_REMOTE_SCHEMA } from '../Actions';
 import ReloadRemoteSchema from '../../Settings/MetadataOptions/ReloadRemoteSchema';
 
+import { Icon } from '../../../UIKit/atoms';
+
 import { appPrefix } from '../constants';
 
 import { NotFoundError } from '../../../Error/PageNotFound';
@@ -35,7 +37,7 @@ class ViewStitchedSchema extends React.Component {
     ]);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.params.remoteSchemaName !== this.props.params.remoteSchemaName
     ) {
@@ -136,7 +138,7 @@ class ViewStitchedSchema extends React.Component {
           </span>
           <span>
             <OverlayTrigger placement="right" overlay={refresh}>
-              <i className="fa fa-question-circle" aria-hidden="true" />
+              <Icon type="questionCircle" size={12} ml="xs" />
             </OverlayTrigger>
           </span>
         </div>
